@@ -11,9 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\NameType;
-use Symfony\Component\Form\Extension\Core\Type\LastNameType;
-use Symfony\Component\Form\Extension\Core\Type\UserNameType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 class RegistrationFormType extends AbstractType
 {
@@ -21,36 +20,26 @@ class RegistrationFormType extends AbstractType
     {
         $builder
 
-        ->add('Name', NameType::class, [
-            // instead of being set onto the object directly,
-            // this is read and encoded in the controller
-            'mapped' => false,
-            'attr' => ['autocomplete' => 'new-name'],
+        ->add('firstName', TextType::class, [
+      
             'constraints' => [
                 new NotBlank([
-                    'message' => 'Please enter a name',
+                    'message' => 'Please enter a First Name',
                 ]),
                 new Length([
-                    'min' => 6,
-                    'minMessage' => 'Your name should be at least {{ limit }} characters',
+   
                     // max length allowed by Symfony for security reasons
                     'max' => 4096,
                 ]),
             ],
         ])
-        ->add('LastName', LastNameType::class, [
-            // instead of being set onto the object directly,
-            // this is read and encoded in the controller
-            'mapped' => false,
-            'attr' => ['autocomplete' => 'new-Lastname'],
+        ->add('lastName', TextType::class, [
             'constraints' => [
                 new NotBlank([
-                    'message' => 'Please enter a Last name',
+                    'message' => 'Please enter a Last Name',
                 ]),
                 new Length([
-                    'min' => 6,
-                    'minMessage' => 'Your Last name should be at least {{ limit }} characters',
-                    // max length allowed by Symfony for security reasons
+                     // max length allowed by Symfony for security reasons
                     'max' => 4096,
                 ]),
             ],
@@ -58,11 +47,7 @@ class RegistrationFormType extends AbstractType
  
             ->add('email')
 
-            ->add('username', UserNameType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-username'],
+            ->add('username', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a username',
@@ -76,14 +61,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -102,6 +80,16 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
 
+
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
+                    ]),
+                ],
+            ])
+ 
         ;
     }
 
