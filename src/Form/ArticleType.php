@@ -20,7 +20,7 @@ class ArticleType extends AbstractType
             ->add('country')
             ->add('attraction')
             ->add('activity')
-            ->add('views')
+            ->add('textArea')
             ->add('photo')
             ->add('user', EntityType::class, [
                 'class' => User::class,

@@ -30,8 +30,8 @@ class Article
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $activity = null;
 
-    #[ORM\Column]
-    private ?int $views = null;
+    #[ORM\Column(length: 2000)]
+    private ?string $textArea = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $photo = null;
@@ -117,14 +117,14 @@ class Article
         return $this;
     }
 
-    public function getViews(): ?int
+    public function getTextArea(): ?string
     {
-        return $this->views;
+        return $this->textArea;
     }
 
-    public function setViews(int $views): static
+    public function setTextArea(?string $textArea): static
     {
-        $this->views = $views;
+        $this->textArea = $textArea;
 
         return $this;
     }

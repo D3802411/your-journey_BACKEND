@@ -14,7 +14,7 @@
                 <th>Country</th>
                 <th>Attraction</th>
                 <th>Activity</th>
-                <th>Views</th>
+                <th>Text Area</th>
                 <th>Photo</th>
                 <th>actions</th>
             </tr>
@@ -23,14 +23,12 @@
         {% for article in articles %}
             <tr>
                 <td>{{ article.id }}</td>
-                <td>{{ article.userId }}</td>
-                <td>{{ article.commentId }}</td>
                 <td>{{ article.place }}</td>
                 <td>{{ article.city }}</td>
                 <td>{{ article.country }}</td>
                 <td>{{ article.attraction }}</td>
                 <td>{{ article.activity }}</td>
-                <td>{{ article.views }}</td>
+                <td>{{ article.textArea }}</td>
                 <td>{{ article.photo ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
