@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -18,14 +19,12 @@ class ArticleType extends AbstractType
             ->add('place')
             ->add('city')
             ->add('country')
-            ->add('attraction')
+            ->add('attraction')            
             ->add('activity')
+            ->add('title')
             ->add('textArea')
             ->add('photo')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+
         ;
     }
 

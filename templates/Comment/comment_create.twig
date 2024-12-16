@@ -1,0 +1,14 @@
+{# templates/comment/create.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Comment{% endblock %}
+
+{% block body %}
+    <h1>Create a comment "{{ article.title }}"</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.content) }}
+        <button class="btn">Submit</button>
+    {{ form_end(form) }}
+{% endblock %}

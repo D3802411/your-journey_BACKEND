@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Form\SearchArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/article')]
 final class ArticleController extends AbstractController
@@ -42,13 +43,13 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
-    {
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-        ]);
-    }
+   #[Route('/{id}/show', name: 'app_article_show', methods: ['GET'])]
+   public function show(Article $article): Response
+   {
+       return $this->render('article/show.html.twig', [
+           'article' => $article,
+       ]);
+   }
 
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
@@ -71,11 +72,38 @@ final class ArticleController extends AbstractController
     #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/search', name: 'app_article_search', methods: ['GET', 'POST'])]
+    public function search(Request $request, ArticleRepository $articleRepository): Response
+    {
+        // Create the search form
+        $form = $this->createForm(SearchArticleType::class);
+
+        // Handle the form submission
+        $form->handleRequest($request);
+
+        $articles = [];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+           // Get the search data
+           $data = $form->getData();
+
+           // Use the ArticleRepository to search articles
+           $articles = $articleRepository->searchArticles($data);
+
+        }
+
+        return $this->render('article/search.html.twig', [
+           'form' => $form->createView(),
+           'articles' => $articles,
+        ]);
+    }
+
 }

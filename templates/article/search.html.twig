@@ -1,0 +1,38 @@
+{# templates/article/search.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Article{% endblock %}
+
+{% block body %}
+    <h1>Search</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.place) }}
+        {{ form_row(form.city) }}
+        {{ form_row(form.country) }} 
+        {{ form_row(form.attraction) }}
+        {{ form_row(form.activity) }}                       
+        {{ form_row(form.title) }}
+ 
+        <button class="btn btn-primary">Search</button>
+    {{ form_end(form) }}
+
+    <h2>Search Results</h2>
+    {% if articles is not empty %}
+        <ul>
+            {% for article in articles %}
+                <li>
+                    <strong>{{ article.title }}</strong> 
+                    <p>{{ article.content }}</p>
+                    <p>Place: {{ article.place }}</p>
+                    <P>City: {{ article.city }}</p>
+                    <p>Country: {{ article.country }}</p>
+                    <p>Attraction: {{ article.attraction }}</p>
+                    <p>Activity: {{ article.activity }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No articles found matching your criteria.</p>
+    {% endif %}
+{% endblock %}

@@ -12,7 +12,9 @@ class Comment
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    
+    #[ORM\Column(length: 350)]
+    private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'comment')]
     private ?Article $article = null;
@@ -21,9 +23,23 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): static
+    {
+        $this->content = $content;
+
+        return $this;
     }
 
 
