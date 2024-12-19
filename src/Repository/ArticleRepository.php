@@ -25,55 +25,64 @@ class ArticleRepository extends ServiceEntityRepository
 // @return Article[]
 
     
-    public function searchArticles($data): array
+    public function searchArticles(array $data): array
     {
-        $qb = $this->createQueryBuilder('article');
+      $queryBuilder = $this->createQueryBuilder('article');
 
         // If place is provided, filter by place
         if (!empty($data['place'])) {
-          $qb->andWhere('article.place LIKE :place')
-             ->setParameter('place', '%' . $data['place'] . '%');
+
+          $queryBuilder
+            ->andWhere('article.place LIKE :place')
+            ->setParameter('place', '%' . $data['place'] . '%');
             }
         
         // If city is provided, filter by city, etc
         if (!empty($data['city'])) {
-          $qb->andWhere('article.city LIKE :city')
-             ->setParameter('city', '%' . $data['city'] . '%');
+          $queryBuilder
+            ->andWhere('article.city LIKE :city')
+            ->setParameter('city', '%' . $data['city'] . '%');
         }
 
         if (!empty($data['country'])) {
-          $qb->andWhere('article.country LIKE :country')
-                     ->setParameter('country', '%' . $data['country'] . '%');
+          $queryBuilder
+            ->andWhere('article.country LIKE :country')
+            ->setParameter('country', '%' . $data['country'] . '%');
         }
         if (!empty($data['attraction'])) {
-          $qb->andWhere('article.attraction LIKE :attraction')
-                     ->setParameter('attraction', '%' . $data['attraction'] . '%');
+          $queryBuilder
+            ->andWhere('article.attraction LIKE :attraction')
+            ->setParameter('attraction', '%' . $data['attraction'] . '%');
         }
+
         if (!empty($data['activity'])) {
-          $qb->andWhere('article.activity LIKE :activity')
-                     ->setParameter('activity', '%' . $data['activity'] . '%');
+          $queryBuilder
+            ->andWhere('article.activity LIKE :activity')
+            ->setParameter('activity', '%' . $data['activity'] . '%');
         }
 
         // If title is provided, filter by title
         if (!empty($data['title'])) {
-            $qb->andWhere('article.title LIKE :title')
-               ->setParameter('title', '%' . $data['title'] . '%');
+          $queryBuilder
+            ->andWhere('article.title LIKE :title')
+            ->setParameter('title', '%' . $data['title'] . '%');
         }
 
        // if (!empty($data['user'])) {
-       //   $qb->andWhere('article.username LIKE :username')
+       //   $queryBuilder->andWhere('article.username LIKE :username')
        //      ->setParameter('username', '%' . $data['username'] . '%');
       //}
 
-      // You can add more conditions here if needed, like ordering
-        $qb->orderBy('article.id', 'ASC'); 
       //debug logging here
-        $query = $qb->getQuery();
-        $sql = $query->getSQL();
-        $params = $query->getParameters();
-        dump($sql, $params);
+      //  $query = $queryBuilder->getQuery();
+      //  $sql = $query->getSQL();
+      //  $params = $query->getParameters();
+      //  dump($sql, $params);
 
-        return $qb->getQuery()->getResult();
+        return $queryBuilder     
+          ->orderBy('article.id', 'ASC') // You can add more conditions here if needed, like ordering
+          ->getQuery()
+          ->getResult();
     }
 }
     

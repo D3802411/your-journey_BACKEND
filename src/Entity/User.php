@@ -18,7 +18,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id = null; // The $id property starts as null because the entity has not been persisted (saved) in the database yet.
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -211,12 +211,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addComment(Comment $comment): static
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setUser($this);
+        if (!$this->comments->contains($comment)) {   //Checks if the comments collection does not already include the $comment. Prevents double.
+            $this->comments->add($comment); // Adds the $comment object to the $comments collection
+            $comment->setUser($this); // Sets the User (current object, $this) as the owner of the $comment
         }
 
-        return $this;
+        return $this;  //remember: $this =current object!
+        
     }
 
     public function removeComment(Comment $comment): static

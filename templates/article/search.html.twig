@@ -18,17 +18,20 @@
     {{ form_end(form) }}
 
     <h2>Search Results</h2>
+    {# Check if there are any articles to display #}
     {% if articles is not empty %}
         <ul>
+        {# Loop through the articles and display the details #}
             {% for article in articles %}
                 <li>
-                    <strong>{{ article.title }}</strong> 
-                    <p>{{ article.content }}</p>
-                    <p>Place: {{ article.place }}</p>
-                    <P>City: {{ article.city }}</p>
-                    <p>Country: {{ article.country }}</p>
-                    <p>Attraction: {{ article.attraction }}</p>
-                    <p>Activity: {{ article.activity }}</p>
+                    <a href="{{ path('app_article_show', { id: article.id }) }}">
+                            {{ article.place }} -
+                            {{ article.city }} -
+                            {{ article.country }} -                                               
+                            {{ article.attraction }} -
+                            {{ article.activity }} -                 
+                            {{ article.title }}                            
+                </a>
                 </li>
             {% endfor %}
         </ul>

@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use App\Form\SearchArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/article')]
 final class ArticleController extends AbstractController
 {
+
     #[Route(name: 'app_article_index', methods: ['GET'])]
     public function index(ArticleRepository $articleRepository): Response
     {
@@ -22,35 +26,81 @@ final class ArticleController extends AbstractController
             'articles' => $articleRepository->findAll(),
         ]);
     }
-
+ 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $article = new Article();
+   
+        $article = new Article();  // This line is creating a new instance of the Article entity. $article object is initialized as a new, empty instance. It doesn’t have any data yet, but it's ready to be filled with form data when the user submits the form.
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            // Sets, assigns the user who created the article and retrives it (meaning: access the currently logged-in user)
+            $article->setUser($this->getUser());
+    
             $entityManager->persist($article);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->render('article/new.html.twig', [
             'article' => $article,
             'form' => $form,
         ]);
     }
 
-   #[Route('/{id}/show', name: 'app_article_show', methods: ['GET'])]
-   public function show(Article $article): Response
-   {
-       return $this->render('article/show.html.twig', [
-           'article' => $article,
-       ]);
+   #[Route('/{id}/show', name: 'app_article_show', methods: ['GET', 'POST'])]
+   public function show(Article $article, Request $request, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
+   {      
+            // Fetch comments for the article
+            $comments = $commentRepository->findBy(['article' => $article]);
+            // Create the comment form
+            $comment = new Comment();
+            // declare the comment form! without this it won't work!
+            $form = $this->createForm(CommentType::class, $comment);
+            $form->handleRequest($request);
+
+            //THIS DOESNT WORK PROPERLY. OK redirection login page but still have user_id error
+            if ($form->isSubmitted() && $form->isValid()) {
+            if (!$this->getUser()) {
+                // Redirect to the login page if the user is not authenticated
+                return $this->redirectToRoute('app_login');
+                }
+            
+                $entityManager->persist($comment);
+                $entityManager->flush();
+            
+                 // Associate the comment with the article
+                 $comment->setArticle($article);
+
+                 $user = $this->getUser();  // Assign the User to the Comment //$user = $security->getUser();
+                 if ($user) {
+                     $comment->setUser($user);  // Set the user who is submitting the comment
+                 } else {
+                     // Handle the case where no user is authenticated (optional)
+                     // You can throw an exception or handle it differently
+                     return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+                 }
+
+                 $entityManager->persist($comment);
+                 $entityManager->flush();
+                // Redirect to the same page to show the new comment
+                return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('article/show.html.twig', [
+                'article' => $article,
+                'comments' => $comments,
+                'form' => $form->createView(),
+            ]);
+
    }
 
+
+              
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
@@ -89,20 +139,23 @@ final class ArticleController extends AbstractController
         // Handle the form submission
         $form->handleRequest($request);
 
-        $articles = [];
+        $articles = [];  // Initialize an empty array to store search results
 
         if ($form->isSubmitted() && $form->isValid()) {
            // Get the search data
            $data = $form->getData();
 
-           // Use the ArticleRepository to search articles
-           $articles = $articleRepository->searchArticles($data);
+            // Debugging the data submitted from the form
+            // dump($data); die;
 
+           // Use the ArticleRepository to search articles
+           $articles = $articleRepository->searchArticles($data); // Custom repository method
+          
         }
 
         return $this->render('article/search.html.twig', [
            'form' => $form->createView(),
-           'articles' => $articles,
+           'articles' => $articles,  // Pass the results to the template
         ]);
     }
 

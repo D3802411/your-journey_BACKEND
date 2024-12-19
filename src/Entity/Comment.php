@@ -8,15 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Id] // this is the way doctrine defines the primary key 
+    #[ORM\GeneratedValue] // Indicates that the value for this key will be generated automatically (e.g., auto-increment for integers)
+    #[ORM\Column] //Defines column properties in DB (ex: type and length).
     private ?int $id = null;
     
     #[ORM\Column(length: 350)]
     private ?string $content = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comment')]
+    #[ORM\ManyToOne(inversedBy: 'comment')]   // Foreign keys in Symfony are declared using rlations
     private ?Article $article = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
@@ -66,4 +66,4 @@ class Comment
 
         return $this;
     }
-}
+}     

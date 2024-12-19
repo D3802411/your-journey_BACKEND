@@ -3,24 +3,24 @@
 namespace App\Form;
 
 use App\Entity\Article;
-//use App\Entity\User; //???????do I need this
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+// use App\Entity\User; //???????do I need this
+// use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraints\NotBlank;
+// use Symfony\Component\Validator\Constraints\NotBlank;
 
 
 class SearchArticleType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): Void
     {
         $builder
             ->add('place', TextType::class, [
             'label' => 'Place',
             'required' => true,
-            'attr' => ['placeholder' => 'example: "Montmartre"'],
+            'attr' => ['placeholder' => 'ex: "Montmartre"'],
             ])
 
             ->add('city', TextType::class, [
@@ -31,20 +31,20 @@ class SearchArticleType extends AbstractType
 
             ->add('country', TextType::class, [
             'label' => 'Country',
-            'required' => true,
+            'required' => false,
             'attr' => ['placeholder' => 'country name'],
             ])
 
             ->add('attraction', TextType::class, [
             'label' => 'Attraction',
             'required' => false,
-            'attr' => ['placeholder' => 'example: "beach"'],
+            'attr' => ['placeholder' => 'ex: "beach"'],
             ])
 
             ->add('activity', TextType::class, [
             'label' => 'Activity',
             'required' => false,
-            'attr' => ['placeholder' => 'activity, ex: "swimming"'],
+            'attr' => ['placeholder' => 'ex: "swimming"'],
             ])
 
             ->add('title', TextType::class, [

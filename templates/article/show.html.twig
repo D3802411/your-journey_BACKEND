@@ -3,7 +3,7 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
+    <h1>{{ article.title }}</h1>
 
     <table class="table">
         <tbody>
@@ -52,4 +52,14 @@
     <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
 
     {{ include('article/_delete_form.html.twig') }}
+
+
+{# copied from templates/comment/create.html.twig NOW change form to: formComment #}
+
+    <h1>Create a comment "{{ article.title }}"</h1>
+    {# {{ form(form, {'method': 'GET'}) }} #}
+    {{ form_start(form) }}
+        {{ form_row(form.content) }}
+        <button class="btn">Submit</button>
+    {{ form_end(form) }}
 {% endblock %}
