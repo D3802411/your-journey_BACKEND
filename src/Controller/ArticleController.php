@@ -63,26 +63,16 @@ final class ArticleController extends AbstractController
             $form = $this->createForm(CommentType::class, $comment);
             $form->handleRequest($request);
 
-            //THIS DOESNT WORK PROPERLY. OK redirection login page but still have user_id error
+           
             if ($form->isSubmitted() && $form->isValid()) {
-            if (!$this->getUser()) {
-                // Redirect to the login page if the user is not authenticated
-                return $this->redirectToRoute('app_login');
-                }
-            
-                $entityManager->persist($comment);
-                $entityManager->flush();
-            
-                 // Associate the comment with the article
-                 $comment->setArticle($article);
-
+                 $comment->setArticle($article); // Associate the comment with the article
                  $user = $this->getUser();  // Assign the User to the Comment //$user = $security->getUser();
-                 if ($user) {
-                     $comment->setUser($user);  // Set the user who is submitting the comment
-                 } else {
-                     // Handle the case where no user is authenticated (optional)
+                    if ($user) {
+                        $comment->setUser($user);  // Set the user who is submitting the comment
+                    } else {
+                     //Redirect to the login page if the user is not authenticated
                      // You can throw an exception or handle it differently
-                     return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+                    return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
                  }
 
                  $entityManager->persist($comment);
@@ -144,6 +134,7 @@ final class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
            // Get the search data
            $data = $form->getData();
+           // dd($data);
 
             // Debugging the data submitted from the form
             // dump($data); die;
@@ -151,6 +142,7 @@ final class ArticleController extends AbstractController
            // Use the ArticleRepository to search articles
            $articles = $articleRepository->searchArticles($data); // Custom repository method
           
+           // NEW PAGE WITH RESULTS return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/search.html.twig', [

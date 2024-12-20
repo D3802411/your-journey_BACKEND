@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SearchArticleType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): Void
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('place', TextType::class, [
@@ -56,7 +56,7 @@ class SearchArticleType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             
