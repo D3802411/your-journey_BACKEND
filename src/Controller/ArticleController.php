@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Form\SearchArticleType;
@@ -14,6 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+// use Symfony\Component\String\Slugger\SluggerInterface; for renaming photofiles
+
 
 #[Route('/article')]
 final class ArticleController extends AbstractController
@@ -27,6 +31,26 @@ final class ArticleController extends AbstractController
         ]);
     }
  
+    /* #[Route('/api/article', name: 'app_article_api', methods: ['GET'])]
+    public function getList(ArticleRepository $articleRepository): JsonResponse
+                {
+                    $articles = $articleRepository->findAll() ;
+                    // $api4json = json_decode($articles) ;
+                    $api4json = array_map(function (Article $article) {
+                        return [
+                            'id' =>$article->getid(),
+                            'place' => $article->getPlace(),
+                            'city' => $article->getCity(),
+                            'country' => $article->getCountry(),
+                            'attraction' => $article->getAttraction(),
+                            'activity' => $article->getActivity(),
+                            'title' => $article->getTitle(),
+                        ];
+                    }, $articles);
+                    return new JsonResponse($api4json, JsonResponse::HTTP_OK); 
+                } */
+
+
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -44,19 +68,19 @@ final class ArticleController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
-        }
-    
-        return $this->render('article/new.html.twig', [
+                }
+            return $this->render('article/new.html.twig', [
             'article' => $article,
             'form' => $form,
         ]);
     }
+    
 
    #[Route('/{id}/show', name: 'app_article_show', methods: ['GET', 'POST'])]
-   public function show(Article $article, Request $request, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
-   {      
+   public function show(Article $article, Request $request, int $id, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
+   {        
             // Fetch comments for the article
-            $comments = $commentRepository->findBy(['article' => $article]);
+            $comments = $commentRepository->findCommentsByArticle($id);
             // Create the comment form
             $comment = new Comment();
             // declare the comment form! without this it won't work!
@@ -69,6 +93,7 @@ final class ArticleController extends AbstractController
                  $user = $this->getUser();  // Assign the User to the Comment //$user = $security->getUser();
                     if ($user) {
                         $comment->setUser($user);  // Set the user who is submitting the comment
+
                     } else {
                      //Redirect to the login page if the user is not authenticated
                      // You can throw an exception or handle it differently
@@ -81,7 +106,7 @@ final class ArticleController extends AbstractController
                 return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
             }
 
-            return $this->render('article/show.html.twig', [
+            return $this->render('article/show.html.twig', [  //here are listed the variables that I will use in twig, for twig to recognise them
                 'article' => $article,
                 'comments' => $comments,
                 'form' => $form->createView(),

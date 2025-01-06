@@ -16,28 +16,20 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    //    /**
-    //     * @return Comment[] Returns an array of Comment objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+        /**
+         * @return Comment[] Returns an array of Comment objects
+         */
+        public function findCommentsByArticle(int $articleId): array //findCommentsByArticle method is part of the CommentRepository class and is used to fetch comments associated with a specific article
+        {
+            return $this->createQueryBuilder('c')  //This line creates a query builder object, which is a way to build a database query in Doctrine
+                ->andWhere('c.article = :articleId') //c is an alias for the Comment entity in this query. Using aliases is necessary!
+                ->setParameter('articleId', $articleId)
+                ->orderBy('c.id', 'ASC')
+                ->setMaxResults(50)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
 
-    //    public function findOneBySomeField($value): ?Comment
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+  
 }

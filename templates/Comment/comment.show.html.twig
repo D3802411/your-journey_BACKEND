@@ -1,0 +1,24 @@
+{# templates/comment/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment{% endblock %}
+
+{% block body %}
+    {% set comment = "" %}
+    <h1>Comments</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>{{ comment.content }}</td>
+            </tr>
+	    </tbody>
+    </table>
+
+    <a href="{{ path('comment_edit', {'id': comment.id}) }}">edit</a>
+
+    {{ include('comment_delete_form.html.twig') }}
+
+
+{% endblock %}

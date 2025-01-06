@@ -1,0 +1,92 @@
+{#  IN ARTICLE CONTROLLER #}
+
+#[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+   
+        $article = new Article();  // This line is creating a new instance of the Article entity. $article object is initialized as a new, empty instance. It doesn’t have any data yet, but it's ready to be filled with form data when the user submits the form.
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Sets, assigns the user who created the article and retrives it (meaning: access the currently logged-in user)
+            $article->setUser($this->getUser());
+
+            $photoFiles = $form->get('photos')->getData();
+            $filenames = [];
+
+            foreach ($photoFiles as $photoFile) {
+                if ($photoFile) {
+                    $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                    try {
+                        $photoFile->move(
+                            $this->getParameter('photos_directory'),
+                            $newFilename
+                        );
+                        $filenames[] = $newFilename;
+                    }
+                }    
+    
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+                }
+            }
+        return $this->render('article/new.html.twig', [
+            'article' => $article,
+            'form' => $form,
+        ]);
+        }
+
+       
+    
+        IN ENTITY ARTICLE    #[ORM\Column(type: 'json')]
+        private array $photos = [];
+        public function getPhotos(): array
+    {
+        return $this->photos;
+    }
+
+    public function setPhotos(array $photos): self
+    {
+        $this->photos = $photos;
+
+        return $this;
+    }
+
+
+    ARTICLE INDEX TWIG
+    {% for photo in article.photos %}
+                    <img src="{{ asset('uploads/photos/' ~ photo) }}" alt="{{ article.title }}">
+                    {% endfor %}
+
+    
+    THIS IS FOR ARTICLETYPE FORM
+                    /*FOR PHOTO ADD ->add('photos', CollectionType::class, [
+                'entry_type' => FileType::class,
+                'entry_options' => [
+                        'attr' => ['accept' => 'image/*'], // Restrict to image files
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '2M',
+                                'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png',
+                                ],
+                                'mimeTypesMessage' => 'Please upload a valid JPEG or PNG image.',
+                            ]), 
+                        ], 
+                ],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'constraints' => [
+                    new Count([
+                        'max' => 5,
+                        'maxMessage' => 'You can upload up to {{ limit }} photos.',
+                    ]),
+                ],
+            ]);   */   
