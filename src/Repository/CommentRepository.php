@@ -31,5 +31,19 @@ class CommentRepository extends ServiceEntityRepository
             ;
         }
 
+        /* public function deleteUserComment(int $commentId, $user): bool
+        {
+        $comment = $this->find($commentId); 
+
+            if ($comment && $comment->getUser() === $user) { //means: comment exists, and verifies that the User associated with the comment is the same as the currently logged-in
+                $this->_em->remove($comment);
+                $this->_em->flush();
+
+                return true;
+            }
+
+            return false;
+        } */
+
   
 }

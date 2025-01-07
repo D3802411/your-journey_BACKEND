@@ -16,8 +16,6 @@ class Comment
     #[ORM\Column(length: 350)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255)]
-    public ?string $username = null;
 
     #[ORM\ManyToOne(inversedBy: 'comment')]   // Foreign keys in Symfony are declared using rlations
     private ?Article $article = null;
@@ -69,15 +67,4 @@ class Comment
         return $this;
     }
     
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): static
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 }     

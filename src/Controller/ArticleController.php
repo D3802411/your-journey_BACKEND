@@ -63,9 +63,9 @@ final class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Sets, assigns the user who created the article and retrives it (meaning: access the currently logged-in user)
             $article->setUser($this->getUser());
-    
             $entityManager->persist($article);
             $entityManager->flush();
+            $this->addFlash("Success", "The articke has been created");
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
                 }
@@ -99,19 +99,36 @@ final class ArticleController extends AbstractController
                      // You can throw an exception or handle it differently
                     return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
                  }
-
                  $entityManager->persist($comment);
                  $entityManager->flush();
                 // Redirect to the same page to show the new comment
                 return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
             }
+            // Fetch comments associated with the article for deletion: already done above
 
+            // Handle comment deletion
+            /* if ($request->isMethod('POST') && $request->request->has('delete_comment')) {
+                $commentId = $request->request->get('delete_comment');
+                $comment = $entityManager->getRepository(Comment::class)->find($commentId);
+
+                // Ensure the comment exists and belongs to the logged-in user
+                if ($comment && $comment->getUser() === $this->getUser()) {
+                    $entityManager->remove($comment);
+                    $entityManager->flush();
+
+                    $this->addFlash('success', 'Comment deleted successfully.');
+                    return $this->render('article/show.html.twig', [
+                        'article' => $article,
+                        'comments' => $comments,
+                    ]);
+                }  
+            } */
             return $this->render('article/show.html.twig', [  //here are listed the variables that I will use in twig, for twig to recognise them
                 'article' => $article,
                 'comments' => $comments,
                 'form' => $form->createView(),
-            ]);
-
+                ]);
+            
    }
 
 

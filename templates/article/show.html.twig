@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>{{ article.title }}</h1>
-
+    <h4>{{ article.user.username }}</h4>
     <table class="table">
         <tbody>
             <tr>
@@ -54,8 +54,6 @@
     {{ include('article/_delete_form.html.twig') }}
 
 
-{# copied from templates/comment/create.html.twig NOW change form to: formComment #}
-
     <h3>Create a comment for "{{ article.title }}"</h3>
     {# {{ form(form, {'method': 'GET'}) }} #}
     {{ form_start(form) }}
@@ -64,17 +62,17 @@
     {{ form_end(form) }}
 
     <h2>Comments</h2>
-    <table>
-        <tbody>
-
+    <ul style="list-style-type: none;">
+        <li>
             <td>
             {% for comment in comments %}
-                {{ comment.content ~ comment.username }}
+                 <p><strong>{{ comment.user.username }}</strong></p>
+                {{ comment.content }}
             {% endfor %}
             </td>
-
         </tbody>
-    </table>
+    </ul>
 
+    {#{{ include('comment/_delete_form.html.twig') }}#}
     
 {% endblock %}
