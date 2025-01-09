@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Display reset token{% endblock %}
+
+{% block body %}
+<h1>Password Reset Token</h1>
+<p>Here is your password reset token. Please keep it secure.</p>
+<p><strong>{{ token }}</strong></p>
+<p>Use this token on the reset password form to create a new password.</p>
+
+{% endblock %}
+{# need for double checking routes names in the controller! #}

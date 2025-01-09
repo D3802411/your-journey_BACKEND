@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{# THE LOGIN PAGE under the login credentials MUST HAVE A LINK to this page #}
+{% block title %}Display link to reset pw and get token {%}
+{% block body %}
+<p>Enter your email address:</p>
+    {{ form_start(resetPasswordRequestForm) }}
+        {{ form_row(resetPasswordRequestForm.email {
+            label: 'Email'
+        }) }}
+        <button class="btn">Submit</button>
+    {{ form_end(resetPasswordRequestForm) }}
+
+<p>Click the link below to reset your password:</p>
+<a href="{{ url('app_reset_password_token', { token: token }) }}">
+    Reset Your Password
+</a>
+{% endblock %}  {# need for double checking routes names in the controller! #}
