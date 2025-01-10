@@ -14,28 +14,8 @@
         {{ form_row(form.activity) }}                       
         {{ form_row(form.title) }}
  
-        <button class="btn btn-primary">Search</button>
+        {# <button class="btn btn-primary">Search</button>  the button has been added in the form#}
+
     {{ form_end(form) }}
 
-    <h2>Search Results</h2> {#NO GOOD! I should be redirected to the show page}
-    {# Check if there are any articles to display #}
-    {% if articles is not empty %}
-        <ul>
-        {# Loop through the articles and display the details #}
-            {% for article in articles %}
-                <li>
-                    <a href="{{ path('app_article_show', { id: article.id }) }}">
-                            {{ article.place }} -
-                            {{ article.city }} -
-                            {{ article.country }} -                                               
-                            {{ article.attraction }} -
-                            {{ article.activity }} -                 
-                            {{ article.title }}                            
-                </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No articles found matching your criteria.</p>
-    {% endif %}
 {% endblock %}

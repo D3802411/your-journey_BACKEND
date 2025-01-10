@@ -65,13 +65,13 @@ final class ArticleController extends AbstractController
             $article->setUser($this->getUser());
             $entityManager->persist($article);
             $entityManager->flush();
-            $this->addFlash("Success", "The articke has been created");
+            $this->addFlash("Success", "The article has been created");
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute("app_article_index", [], Response::HTTP_SEE_OTHER);
                 }
-            return $this->render('article/new.html.twig', [
-            'article' => $article,
-            'form' => $form,
+            return $this->render("article/new.html.twig", [
+            "article" => $article,
+            "form" => $form,
         ]);
     }
     
@@ -161,13 +161,19 @@ final class ArticleController extends AbstractController
 
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+    #[Route('/search_results', name: 'app_article_search_results', methods: ['GET'])]
+    public function searchResults(Article $article, ArticleRepository $articleRepository)
+    {   return $articles = $articleRepository->searchArticles($data);
+
+    }
+
 
     #[Route('/search', name: 'app_article_search', methods: ['GET', 'POST'])]
     public function search(Request $request, ArticleRepository $articleRepository): Response
     {
         // Create the search form
         $form = $this->createForm(SearchArticleType::class);
-
         // Handle the form submission
         $form->handleRequest($request);
 
@@ -183,8 +189,8 @@ final class ArticleController extends AbstractController
 
            // Use the ArticleRepository to search articles
            $articles = $articleRepository->searchArticles($data); // Custom repository method
-          
-           // NEW PAGE WITH RESULTS return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+           // NEW PAGE WITH RESULTS
+           return $this->redirectToRoute('app_article_search_results', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/search.html.twig', [

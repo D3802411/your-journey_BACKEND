@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search results{% endblock %}
+
+{% block body %}
+{# here goes (A VARIABLE ??) the array that represents the search results #}
+   <h1>Search Results</h1>
+    {# Check if there are any articles to display #}
+    {% if articles is not empty %}
+        <ul>
+        {# Loop through the articles and display the details #}
+            {% for article in articles %}
+                <li>
+                    <a href="{{ path('app_article_search_results', { id: article.id }) }}">
+                            {{ article.place }} -
+                            {{ article.city }} -
+                            {{ article.country }} -                                               
+                            {{ article.attraction }} -
+                            {{ article.activity }} -                 
+                            {{ article.title }}                            
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No articles found matching your criteria.</p>
+    {% endif %}
+
+{% endblock %}
