@@ -24,63 +24,61 @@ class ArticleRepository extends ServiceEntityRepository
 // @param string|null $query
 // @return Article[]
 
-    
-    public function searchArticles(array $data): array
+    //findBySearchQuery: is a custom, reusable method that uses method createQueryBuilder internally to encapsulate search logic
+    public function findBySearchQuery(array $query): array
     {
-      $queryBuilder = $this->createQueryBuilder('article');
+      $queryBuilder = $this->createQueryBuilder('a'); // a is for article, it's OK to give "a"
 
         // If place is provided, filter by place
-        if (!empty($data['place'])) {
-
+        if (!empty($query['place'])) {
           $queryBuilder
-            ->andWhere('article.place LIKE :place')
-            ->setParameter('place', '%' . $data['place'] . '%');
+            ->andWhere('a.place LIKE :place')
+            ->setParameter('place', '%' . $query['place'] . '%');
             }
         
         // If city is provided, filter by city, etc
-        if (!empty($data['city'])) {
+        if (!empty($query['city'])) {
           $queryBuilder
-            ->andWhere('article.city LIKE :city')
-            ->setParameter('city', '%' . $data['city'] . '%');
+            ->andWhere('a.city LIKE :city')
+            ->setParameter('city', '%' . $query['city'] . '%');
         }
 
-        if (!empty($data['country'])) {
+        if (!empty($query['country'])) {
           $queryBuilder
-            ->andWhere('article.country LIKE :country')
-            ->setParameter('country', '%' . $data['country'] . '%');
+            ->andWhere('a.country LIKE :country')
+            ->setParameter('country', '%' . $query['country'] . '%');
         }
-        if (!empty($data['attraction'])) {
+        if (!empty($query['attraction'])) {
           $queryBuilder
-            ->andWhere('article.attraction LIKE :attraction')
-            ->setParameter('attraction', '%' . $data['attraction'] . '%');
+            ->andWhere('a.attraction LIKE :attraction')
+            ->setParameter('attraction', '%' . $query['attraction'] . '%');
         }
 
-        if (!empty($data['activity'])) {
+        if (!empty($query['activity'])) {
           $queryBuilder
-            ->andWhere('article.activity LIKE :activity')
-            ->setParameter('activity', '%' . $data['activity'] . '%');
+            ->andWhere('a.activity LIKE :activity')
+            ->setParameter('activity', '%' . $query['activity'] . '%');
         }
 
         // If title is provided, filter by title
-        if (!empty($data['title'])) {
+        if (!empty($query['title'])) {
           $queryBuilder
-            ->andWhere('article.title LIKE :title')
-            ->setParameter('title', '%' . $data['title'] . '%');
+            ->andWhere('a.title LIKE :title')
+            ->setParameter('title', '%' . $query['title'] . '%');
         }
 
-       // if (!empty($data['user'])) {
-       //   $queryBuilder->andWhere('article.username LIKE :username')
+       // if (!empty($query['user'])) {
+       //   $queryBuilder->andWhere('a.username LIKE :username')
        //      ->setParameter('username', '%' . $data['username'] . '%');
       //}
 
-      //debug logging here
       //  $query = $queryBuilder->getQuery();
       //  $sql = $query->getSQL();
       //  $params = $query->getParameters();
       //  dump($sql, $params);
 
         return $queryBuilder     
-          ->orderBy('article.id', 'ASC') // You can add more conditions here if needed, like ordering
+          ->orderBy('a.id', 'DESC') // You can add more conditions here if needed, like ordering
           ->getQuery()
           ->getResult();
     }

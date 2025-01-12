@@ -158,21 +158,13 @@ final class ArticleController extends AbstractController
             $entityManager->remove($article);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
-    
-    #[Route('/search_results', name: 'app_article_search_results', methods: ['GET'])]
-    public function searchResults(Article $article, ArticleRepository $articleRepository)
-    {   return $articles = $articleRepository->searchArticles($data);
 
-    }
-
-
-    #[Route('/search', name: 'app_article_search', methods: ['GET', 'POST'])]
+    #[Route('/search', name: 'app_article_search', methods: ['GET'])]
     public function search(Request $request, ArticleRepository $articleRepository): Response
-    {
-        // Create the search form
+    {   
+        // Create the search form   DO I STILL NEED THIS
         $form = $this->createForm(SearchArticleType::class);
         // Handle the form submission
         $form->handleRequest($request);
@@ -180,23 +172,45 @@ final class ArticleController extends AbstractController
         $articles = [];  // Initialize an empty array to store search results
 
         if ($form->isSubmitted() && $form->isValid()) {
-           // Get the search data
-           $data = $form->getData();
-           // dd($data);
-
-            // Debugging the data submitted from the form
-            // dump($data); die;
-
-           // Use the ArticleRepository to search articles
-           $articles = $articleRepository->searchArticles($data); // Custom repository method
-           // NEW PAGE WITH RESULTS
-           return $this->redirectToRoute('app_article_search_results', [], Response::HTTP_SEE_OTHER);
+            // Get the search data
+            $query = $form->getData();
+            // Fetch articles using the Article repository 
+            $articles = $articleRepository->findBySearchQuery($query);
+            // NEW PAGE WITH RESULTS is INDEED a new route, as it's gives back an array of results
+            return $this->redirectToRoute('app_article_search_results', [], Response::HTTP_SEE_OTHER);
         }
 
+                
+        // Build the $query array from request parameters
+        // $query = [
+        //    'place' => $request->query->get('place', ''),
+         //   'city' => $request->query->get('city', ''),
+        //    'country' => $request->query->get('country', ''),
+        //    'attraction' => $request->query->get('attraction', ''),
+        //    'activity' => $request->query->get('activity', ''),
+        //    'title' => $request->query->get('title', ''),
+
+        //];
+       
+        // Use the ArticleRepository to search articles
+         //  $articles = $articleRepository->searchArticles($data); // Custom repository method
+     
         return $this->render('article/search.html.twig', [
            'form' => $form->createView(),
            'articles' => $articles,  // Pass the results to the template
         ]);
+    }
+
+    #[Route('/search_results', name: 'app_article_search_results', methods: ['GET'])]
+    public function displayResults(Request $request, ArticleRepository $articleRepository): Response
+    {   // Retrieve the search criteria from the query parameters
+        $query = $request->query->all();
+        // Fetch articles using the repository method
+        $articles = $articleRepository->findBySearchQuery($query);
+        return $this->render('article/search_results.html.twig', [
+            'articles' => $articles,  // Pass the results to the template
+         ]);
+
     }
 
 }

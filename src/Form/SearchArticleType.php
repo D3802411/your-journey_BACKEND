@@ -54,16 +54,16 @@ class SearchArticleType extends AbstractType
             'attr' => ['placeholder' => 'Search by title'],
             ])
             
-            ->add("search", SubmitType::class, [
-                "label" => "Search",
-            ])
+           //BUTTON DONE IN TWIG  ->add("search", SubmitType::class, [
+            //    "label" => "Search",
+            //])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            
+            'method' => 'GET', // Use GET to include parameters in the URL
             'data_class' => null,  // This ensures the form data is returned as an array, 
             // not an Article object; This will fix the form data issue and allow you to work with an array of form fields in the controller.
             //We don't need a class for the search form 'data_class' => Article::class,

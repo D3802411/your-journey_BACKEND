@@ -11,7 +11,7 @@
         {# Loop through the articles and display the details #}
             {% for article in articles %}
                 <li>
-                    <a href="{{ path('app_article_search_results', { id: article.id }) }}">
+                 <a href="{{ path('app_article_show', { id: article.id }) }}"> 
                             {{ article.place }} -
                             {{ article.city }} -
                             {{ article.country }} -                                               
@@ -25,5 +25,6 @@
     {% else %}
         <p>No articles found matching your criteria.</p>
     {% endif %}
+<a href="{{ path('app_article_search') }}">Back to Search</a>
 
 {% endblock %}
