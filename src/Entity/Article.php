@@ -163,7 +163,7 @@ class Article
      */
     public function getComments(): Collection
     {
-        return $this->comments;
+        return $this->comment;
     }
 
     public function addComment(Comment $comment): static

@@ -25,9 +25,11 @@ final class ArticleController extends AbstractController
 
     #[Route(name: 'app_article_index', methods: ['GET'])]
     public function index(ArticleRepository $articleRepository): Response
-    {
+    {   // Get the currently logged-in user to select what buttons will appear
+        $user = $this->getUser();
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
+            'user' => $user,
         ]);
     }
  
@@ -79,15 +81,17 @@ final class ArticleController extends AbstractController
    #[Route('/{id}/show', name: 'app_article_show', methods: ['GET', 'POST'])]
    public function show(Article $article, Request $request, int $id, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
    {        
-            // Fetch comments for the article
+            // Fetch comments for the article. Done here because it does not have to be on a different route
             $comments = $commentRepository->findCommentsByArticle($id);
             // Create the comment form
             $comment = new Comment();
             // declare the comment form! without this it won't work!
             $form = $this->createForm(CommentType::class, $comment);
             $form->handleRequest($request);
+            // Get the currently logged-in user
+            $user = $this->getUser();
 
-           
+
             if ($form->isSubmitted() && $form->isValid()) {
                  $comment->setArticle($article); // Associate the comment with the article
                  $user = $this->getUser();  // Assign the User to the Comment //$user = $security->getUser();
@@ -103,36 +107,36 @@ final class ArticleController extends AbstractController
                  $entityManager->flush();
                 // Redirect to the same page to show the new comment
                 return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
+
+                ///////////IT DOESNT WORK!!!!! for deleting comments/////////////////
+                if ($request->isMethod('POST') && $request->request->has('delete_comment')) {
+                    $commentId = $request->request->get('delete_comment');
+                    $comment = $commentRepository->find($commentId);
+                    // Security check: Ensure the logged-in user owns the comment or is an admin
+                    $user = $this->getUser();
+                    if ($comment->getUser() !== $user && !$this->isGranted('ROLE_ADMIN')) {
+                        $this->addFlash('error', 'You do not have permission to delete this comment.');
+                    return $this->redirectToRoute('app_article_show', ['id' => $article->getId()]);
+                }      
+
+                $entityManager->remove($comment);
+                $entityManager->flush();
+                $this->addFlash('success', 'Comment deleted successfully!');
+                return $this->redirectToRoute('app_article_show', ['id' => $article->getId()]);
+                }//////////////////////////////////////////////////////////////////////////
             }
-            // Fetch comments associated with the article for deletion: already done above
 
-            // Handle comment deletion
-            /* if ($request->isMethod('POST') && $request->request->has('delete_comment')) {
-                $commentId = $request->request->get('delete_comment');
-                $comment = $entityManager->getRepository(Comment::class)->find($commentId);
-
-                // Ensure the comment exists and belongs to the logged-in user
-                if ($comment && $comment->getUser() === $this->getUser()) {
-                    $entityManager->remove($comment);
-                    $entityManager->flush();
-
-                    $this->addFlash('success', 'Comment deleted successfully.');
-                    return $this->render('article/show.html.twig', [
-                        'article' => $article,
-                        'comments' => $comments,
-                    ]);
-                }  
-            } */
-            return $this->render('article/show.html.twig', [  //here are listed the variables that I will use in twig, for twig to recognise them
+        return $this->render('article/show.html.twig', [  //here are listed the variables that will be returned in the twig, for twig to recognise them
                 'article' => $article,
+                'user' => $user,
                 'comments' => $comments,
+                'comment' => $comment,
                 'form' => $form->createView(),
                 ]);
             
-   }
+    }
+    
 
-
-              
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {

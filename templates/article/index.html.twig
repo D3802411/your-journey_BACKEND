@@ -34,7 +34,9 @@
                 <td>{{ article.photo ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
+                    {% if user is same as(article.user) %}
                     <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
