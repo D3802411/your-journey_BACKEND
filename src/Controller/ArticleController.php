@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
 // use Symfony\Component\String\Slugger\SluggerInterface; for renaming photofiles
 
 
@@ -81,61 +82,84 @@ final class ArticleController extends AbstractController
    #[Route('/{id}/show', name: 'app_article_show', methods: ['GET', 'POST'])]
    public function show(Article $article, Request $request, int $id, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
    {        
-            // Fetch comments for the article. Done here because it does not have to be on a different route
-            $comments = $commentRepository->findCommentsByArticle($id);
-            // Create the comment form
-            $comment = new Comment();
-            // declare the comment form! without this it won't work!
-            $form = $this->createForm(CommentType::class, $comment);
-            $form->handleRequest($request);
-            // Get the currently logged-in user
-            $user = $this->getUser();
+        // Fetch comments for the article. Done here because it does not have to be on a different route
+        $comments = $commentRepository->findCommentsByArticle($id);
+        // Create the comment form
+        $comment = new Comment();
+        // declare the comment form! without this it won't work!
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        // Get the currently logged-in user: if it's here, do I still have to add it in every if?
+        $user = $this->getUser();
 
-
+            //comment submission
             if ($form->isSubmitted() && $form->isValid()) {
-                 $comment->setArticle($article); // Associate the comment with the article
-                 $user = $this->getUser();  // Assign the User to the Comment //$user = $security->getUser();
-                    if ($user) {
-                        $comment->setUser($user);  // Set the user who is submitting the comment
-
-                    } else {
-                     //Redirect to the login page if the user is not authenticated
-                     // You can throw an exception or handle it differently
+                $comment->setArticle($article); // Associate the comment with the article
+                if ($user) {
+                    $comment->setUser($user);  // Set the user who is submitting/editing/deleting the comment
+                    $this->isGranted('ROLE_ADMIN');
+                } else {
+                    //Redirect to the login page if the user is not authenticated
+                    $this->addFlash('Join us!', 'Register or login to leave your comment');
                     return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
-                 }
-                 $entityManager->persist($comment);
-                 $entityManager->flush();
-                // Redirect to the same page to show the new comment
-                return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
-
-                ///////////IT DOESNT WORK!!!!! for deleting comments/////////////////
-                if ($request->isMethod('POST') && $request->request->has('delete_comment')) {
-                    $commentId = $request->request->get('delete_comment');
-                    $comment = $commentRepository->find($commentId);
-                    // Security check: Ensure the logged-in user owns the comment or is an admin
-                    $user = $this->getUser();
-                    if ($comment->getUser() !== $user && !$this->isGranted('ROLE_ADMIN')) {
-                        $this->addFlash('error', 'You do not have permission to delete this comment.');
-                    return $this->redirectToRoute('app_article_show', ['id' => $article->getId()]);
-                }      
-
-                $entityManager->remove($comment);
+                  }    
+                $entityManager->persist($comment);
                 $entityManager->flush();
-                $this->addFlash('success', 'Comment deleted successfully!');
-                return $this->redirectToRoute('app_article_show', ['id' => $article->getId()]);
-                }//////////////////////////////////////////////////////////////////////////
+            // Redirect to the same page to show the new comment
+            return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
             }
 
-        return $this->render('article/show.html.twig', [  //here are listed the variables that will be returned in the twig, for twig to recognise them
+            //comment edition
+
+            //comment deletion: see route below
+         
+     
+        return $this->render('article/show.html.twig', [
+            //here are listed the variables that will be returned in the twig, for twig to recognise them    
                 'article' => $article,
                 'user' => $user,
                 'comments' => $comments,
                 'comment' => $comment,
                 'form' => $form->createView(),
                 ]);
-            
+    }        
+
+
+    #[Route('/_delete_comment/{id}/json', name: 'app_article_delete_comment', methods: ['POST'])]
+    public function deleteComment(Comment $comment, EntityManagerInterface $entityManager): JsonResponse
+    {        
+            //see if the user may delete the comment 
+            $user = $this->getUser();
+            if (!$this->isGranted('ROLE_ADMIN') && $comment->getUser() !== $user) {
+                throw $this->createAccessDeniedException('You do not have permission to delete this comment.');
+            }        
+                $entityManager->remove($comment);
+                $entityManager->flush();
+                //$this->addFlash('success', 'Comment deleted successfully!');
+
+        //return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
+        return new JsonResponse (['Message' => 'Comment deleted successfully!']);
     }
+
     
+    #[Route('/_edit_comment/{id}', name: 'app_article_edit_comment', methods: ['GET', 'POST'])]
+    public function editComment(Request $request, Comment $comment, int $id, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
+    {   
+        $comment = $commentRepository->find($id);  //fetch a comment by its id
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            return $this->redirectToRoute('app_article_show', ['id' => $comment->getArticle()->getId()]);
+        }
+
+        return $this->render('article/_edit_comment.html.twig', [
+            'comment' => $comment,
+            'form' => $form,
+        ]);
+    }
+
 
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
@@ -154,6 +178,7 @@ final class ArticleController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response

@@ -31,9 +31,22 @@ class CommentRepository extends ServiceEntityRepository
             ;
         }
 
-        /* public function deleteUserComment(int $commentId, $user): bool
+    }   
+              
+        /* THIS IS A SEARCH OF COMMENT BY ID BUT THE DELETE FORM SHOULD NOT NEED IT ??? */
+        
+       /* public function findCommentWithCustomQuery(int $id): ?Comment
         {
-        $comment = $this->find($commentId); 
+            return $this->createQueryBuilder('c')
+                ->where('c.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getResult()
+            ;
+        } 
+  
+ 
+            /* 
 
             if ($comment && $comment->getUser() === $user) { //means: comment exists, and verifies that the User associated with the comment is the same as the currently logged-in
                 $this->_em->remove($comment);
@@ -45,5 +58,3 @@ class CommentRepository extends ServiceEntityRepository
             return false;
         } */
 
-  
-}

@@ -42,7 +42,7 @@ class Article
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article', cascade: ['remove'])]
     private Collection $comment;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]

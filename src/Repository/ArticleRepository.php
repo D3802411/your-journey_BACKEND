@@ -67,16 +67,6 @@ class ArticleRepository extends ServiceEntityRepository
             ->setParameter('title', '%' . $query['title'] . '%');
         }
 
-       // if (!empty($query['user'])) {
-       //   $queryBuilder->andWhere('a.username LIKE :username')
-       //      ->setParameter('username', '%' . $data['username'] . '%');
-      //}
-
-      //  $query = $queryBuilder->getQuery();
-      //  $sql = $query->getSQL();
-      //  $params = $query->getParameters();
-      //  dump($sql, $params);
-
         return $queryBuilder     
           ->orderBy('a.id', 'DESC') // You can add more conditions here if needed, like ordering
           ->getQuery()

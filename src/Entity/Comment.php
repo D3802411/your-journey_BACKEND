@@ -11,8 +11,9 @@ class Comment
     #[ORM\Id] // this is the way doctrine defines the primary key 
     #[ORM\GeneratedValue] // Indicates that the value for this key will be generated automatically (e.g., auto-increment for integers)
     #[ORM\Column] //Defines column properties in DB (ex: type and length).
-    private ?int $id = null;
-    
+    private ?int $id = null; 
+
+
     #[ORM\Column(length: 350)]
     private ?string $content = null;
 
