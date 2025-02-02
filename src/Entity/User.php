@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -116,11 +117,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
+    //This getter method allows access to the password property.
     public function getPassword(): ?string
     {
         return $this->password;
     }
-
+    //This setter method allows the password to be updated.
     public function setPassword(string $password): static
     {
         $this->password = $password;
@@ -131,6 +133,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
+    //used to remove pw from the entity after authentication. Here's void as the pw is hashed
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here

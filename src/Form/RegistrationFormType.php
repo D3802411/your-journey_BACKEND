@@ -61,26 +61,27 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             
-
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                // PW is hashed in the controller, not here
+                'mapped' => false, // not bind to the entity as string, because it's more secure if it stays hashed
+                'attr' => ['autocomplete' => 'new-password'],  //sets HTML attribute that prevents pw from autofilling and ask the U to write it anew
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Please enter a valid password',
                     ]),
                     new Length([
-                        'min' => 12,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'min' => 8,
+                        'minMessage' => 'Your password must be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
-                        'max' => 25,
+                        'max' => 64,
                     ]),
-                    new Regex('/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'),
+                    new Regex(
+                        pattern: '/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/',
+                        message: 'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.'
+                        // '/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                        ),
                 ],
             ])
-
 
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

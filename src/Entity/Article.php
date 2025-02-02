@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ORM\EntityListeners(['App\EntityListener\ArticleEntityListener'])]
@@ -46,7 +46,7 @@ class Article
     private ?string $slug = null;
     public function computeSlug(SluggerInterface $slugger): void  // Generate slug automatically before persisting to the database
     {
-        //only computes a slug when the current slug is empty or set to the special - value. Why do we need the - special value?
+        //checking whether the $slug property of an object is empty. If empty, it generates new slug based on $title property using a slugger
             if (empty($this->slug)) {
                 $this->slug = strtolower($slugger->slug($this->title)->toString());
             }
