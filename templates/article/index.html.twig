@@ -33,9 +33,9 @@
                 <td>{{ article.textArea }}</td>
                 <td>{{ article.photo ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
+                    <a href="{{ path('app_article_show', {'slug': article.slug, 'id': article.id}) }}">Show</a>
                     {% if user is same as(article.user) %}
-                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                    <a href="{{ path('app_article_edit', {'slug': article.slug, 'id': article.id}) }}">Edit</a>
                     {% endif %}
                 </td>
             </tr>

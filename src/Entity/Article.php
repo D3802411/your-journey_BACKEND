@@ -1,13 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[ORM\EntityListeners(['App\EntityListener\ArticleEntityListener'])]
+#[UniqueEntity('title')]
+#[UniqueEntity('slug')]
+#[ORM\HasLifecycleCallbacks]
 class Article
 {
     #[ORM\Id]
@@ -32,6 +41,16 @@ class Article
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
+    
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
+    public function computeSlug(SluggerInterface $slugger): void  // Generate slug automatically before persisting to the database
+    {
+        //only computes a slug when the current slug is empty or set to the special - value. Why do we need the - special value?
+            if (empty($this->slug)) {
+                $this->slug = strtolower($slugger->slug($this->title)->toString());
+            }
+    }
 
     #[ORM\Column(length: 2000)]
     private ?string $textArea = null;
@@ -133,6 +152,17 @@ class Article
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    } 
 
     public function getTextArea(): ?string
     {

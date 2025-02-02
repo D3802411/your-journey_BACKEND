@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
@@ -56,13 +58,14 @@ class UserController extends AbstractController
         $user->setEmail($data ["email"]);
         $user->setRoles($data ["roles"] ?? ["ROLE_USER"]);
         $user->setPassword($data ["password"]);
+        $user->setUsername($data ["username"]);
         $user->setFirstName($data ["firstName"]);
         $user->setLastName($data ["lastName"]);
-        $user->setUsername($data ["username"]);
-        
+
+    
         //record the new user in the DB
-        $em->persist($user);
-        $em->flush();
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         return new JsonResponse(["status" => "User created"], JsonResponse::HTTP_CREATED);
     }

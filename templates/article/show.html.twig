@@ -51,7 +51,7 @@
 
 
     {% if user is same as(article.user) %}
-    <a href="{{ path('app_article_edit', {'id': article.id}) }}">Edit</a>
+    <a href="{{ path('app_article_edit', {'slug': article.slug, 'id': article.id}) }}">Edit</a>
     {{ include('article/_delete_form.html.twig') }}
     {% endif %}
 

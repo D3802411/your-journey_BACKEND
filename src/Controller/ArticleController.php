@@ -16,8 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
-// use Symfony\Component\String\Slugger\SluggerInterface; for renaming photofiles
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 #[Route('/article')]
@@ -79,9 +78,9 @@ final class ArticleController extends AbstractController
     }
     
 
-   #[Route('/{id}/show', name: 'app_article_show', methods: ['GET', 'POST'])]
-   public function show(Article $article, Request $request, int $id, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
-   {        
+   #[Route('/{slug}-{id}/show', name: 'app_article_show', requirements: ['id' => '\d+', 'slug' => '[a-z0-9-]+'], methods: ['GET', 'POST'])]
+   public function show(Article $article, Request $request, SluggerInterface $slugger, int $id, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
+   {    
         // Fetch comments for the article. Done here because it does not have to be on a different route
         $comments = $commentRepository->findCommentsByArticle($id);
         // Create the comment form
@@ -91,6 +90,13 @@ final class ArticleController extends AbstractController
         $form->handleRequest($request);
         // Get the currently logged-in user: if it's here, do I still have to add it in every if?
         $user = $this->getUser();
+        $title = $article->getTitle(); // Get the title from the article entity
+        $slug = $slugger->slug($article->getTitle())->toString();
+        // Fetch the article from the database
+        $article = $entityManager->getRepository(Article::class)->findOneBy([
+            'id' => $id,
+            'slug' => $slug,
+        ]);
 
             //comment submission
             if ($form->isSubmitted() && $form->isValid()) {
@@ -106,7 +112,7 @@ final class ArticleController extends AbstractController
                 $entityManager->persist($comment);
                 $entityManager->flush();
             // Redirect to the same page to show the new comment
-            return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_show', ['slug' => $slug,'id' => $article->getId()], Response::HTTP_SEE_OTHER);
             }
 
             //comment edition
@@ -151,7 +157,7 @@ final class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            return $this->redirectToRoute('app_article_show', ['id' => $comment->getArticle()->getId()]);
+            return $this->redirectToRoute('app_article_show', ['slug' => $comment->getArticle()->getSlug(),'id' => $comment->getArticle()->getId()]);
         }
 
         return $this->render('article/_edit_comment.html.twig', [
@@ -161,7 +167,7 @@ final class ArticleController extends AbstractController
     }
 
 
-    #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}-{id}/edit', name: 'app_article_edit', requirements: ['id' => '\d+', 'slug' => '[a-z0-9-]+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
@@ -180,7 +186,7 @@ final class ArticleController extends AbstractController
     }
 
 
-    #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
+    #[Route('/{slug}-{id}', name: 'app_article_delete', requirements: ['id' => '\d+', 'slug' => '[a-z0-9-]+'], methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
