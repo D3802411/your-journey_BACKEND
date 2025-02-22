@@ -24,6 +24,9 @@ class Article
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $publishedAt = null;
+
     #[ORM\Column(length: 255)]
     private ?string $place = null;
 
@@ -78,6 +81,16 @@ class Article
         return $this->id;
     }
 
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
+        return $this;
+    } 
 
     public function getPlace(): ?string
     {

@@ -1,11 +1,16 @@
 framework:
-    validation:
-        # Enables validator auto-mapping support.
-        # For instance, basic validation constraints will be inferred from Doctrine's metadata.
-        #auto_mapping:
-        #    App\Entity\: []
+  validation:
+    # Enables validator auto-mapping support.
+    # For instance, basic validation constraints will be inferred from Doctrine's metadata.
+    #auto_mapping:
+    #    App\Entity\: []
+    # ALL THE FOLLOWING ADDED ON 20/02 config/validator/validation.yaml
+    #App\Entity\User: #FROM HERE
+    # properties:
+    #   rawPassword:
+    #    - PasswordStrength #TO HERE: added on 20/02
 
 when@test:
-    framework:
-        validation:
-            not_compromised_password: false
+  framework:
+    validation:
+      not_compromised_password: false

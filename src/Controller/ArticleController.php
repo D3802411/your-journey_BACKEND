@@ -70,8 +70,8 @@ final class ArticleController extends AbstractController
             $this->addFlash("Success", "The article has been created");
 
             return $this->redirectToRoute("app_article_index", [], Response::HTTP_SEE_OTHER);
-                }
-            return $this->render("article/new.html.twig", [
+        }
+    return $this->render("article/new.html.twig", [
             "article" => $article,
             "form" => $form,
         ]);
@@ -116,7 +116,6 @@ final class ArticleController extends AbstractController
             }
 
             //comment edition
-
             //comment deletion: see route below
          
      

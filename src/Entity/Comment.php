@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -11,10 +12,15 @@ class Comment
     #[ORM\Id] // this is the way doctrine defines the primary key 
     #[ORM\GeneratedValue] // Indicates that the value for this key will be generated automatically (e.g., auto-increment for integers)
     #[ORM\Column] //Defines column properties in DB (ex: type and length).
+    #[Groups(['comments.index'])] //I need this attribute for the serialiser to encode this property in json for the api
     private ?int $id = null; 
+
+    //#[ORM\Column(type: 'datetime')]
+    //private ?\DateTimeInterface $publishedAt = null;
 
 
     #[ORM\Column(length: 350)]
+    #[Groups(['comments.index'])] //I need this attribute for the serialiser to encode this property in json for the api
     private ?string $content = null;
 
 
@@ -32,6 +38,17 @@ class Comment
         return $this->id;
     }
 
+    /*public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
+        return $this;
+    } */
+    
     public function getContent(): ?string
     {
         return $this->content;

@@ -1,0 +1,280 @@
+/* Your Journey */
+
+/* root - Set a background color and padding for the document's root element */
+:root {
+	--main-bg-color-white: white;
+	--main-bg-color-blue: rgb(49, 139, 142);
+	--main-bg-color-darkblue: rgb(2, 50, 58);
+	--main-bg-color-lightblue: rgb(217, 238, 237);
+}
+
+body {
+	font-family: "Lato", "sans-serif", "arial", "verdana" !important ;
+	background-color: var(bg-color-white);
+}
+
+/* same BS class for header and footer */
+.container {
+	margin-top: 1px;
+	display: flex;
+	justify-content: center;
+}
+
+.container4buttons {
+	justify-content: center;
+	width: 100%;
+	padding: 1px;
+}
+
+.nav-buttons {
+	cursor: pointer;
+	padding: 2px;
+	width: 170px;
+	margin-top: 2px;
+	margin: 4px;
+	text-align: center;
+	background-color: var(--main-bg-color-blue);
+	border-radius: 4%;
+}
+
+.logo-box {
+	width: 120px;
+}
+
+.footer-btn {
+	margin-top: 2px;
+}
+
+.submit-btn {
+	cursor: pointer;
+	width: 120px;
+	margin: 8px;
+	padding: 5px;
+	align-items: center;
+	text-align: center;
+	background-color: var(--main-bg-color-darkblue);
+	border-radius: 6%;
+}
+
+/* CSS for footer starts here */
+.p-footer {
+	font-size: 10px;
+}
+
+footer {
+	margin-top: 10px;
+}
+
+.icon-button {
+	width: 25px;
+	margin: 4px;
+}
+
+.social-buttons {
+	width: 100%;
+	height: 30px;
+	cursor: pointer;
+	font-size: 15px;
+	text-align: center;
+	text-size-adjust: 10px;
+	font-weight: bold;
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
+}
+
+/*END FOOTER*/
+
+/* ////////////////////////   FORM CSS STARTS HERE    */
+
+/*background for forms pages*/
+
+.section-bg {
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-container {
+	height: 500px;
+	width: 400px;
+	margin: 0 auto;
+	padding: 20px;
+	align-items: center;
+	background-color: var(--main-bg-color-lightblue);
+	border-radius: 4%;
+	box-shadow: 10px 10px 10px var(--main-bg-color-blue);
+}
+
+p {
+	font-size: 18px;
+	text-align: justify;
+}
+
+.text-container {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+
+	h3 {
+		color: var(--main-bg-color-darkblue);
+		font-weight: bolder;
+	}
+	textarea {
+		height: 150px;
+	}
+}
+
+.text-container1 {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	h2 {
+		color: var(--main-bg-color-darkblue);
+		font-weight: bolder;
+	}
+}
+
+/* create article form */
+.article-container {
+	height: auto;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 15px;
+	margin-bottom: 30px;
+	padding: 20px;
+	background-color: var(--main-bg-color-lightblue);
+	border-radius: 4%;
+	box-shadow: 10px 10px 10px var(--main-bg-color-blue);
+}
+
+.btn-container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 2px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 20px;
+}
+
+.btn-container-article {
+	display: flex;
+	justify-content: space-between;
+	margin: 0 auto;
+}
+
+.place,
+.country,
+.attraction,
+.activity {
+	width: 95%;
+	height: 25px;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+
+.article-area {
+	height: 130px;
+	width: 100%;
+}
+
+/*.left-boxes,
+.right-boxes {
+	margin-top: 15px;
+	display: flex;
+	justify-content: space-between;
+}*/
+
+.buttons {
+	width: 100%;
+	height: 30px;
+	cursor: pointer;
+	font-size: 15px;
+	text-align: center;
+	text-size-adjust: 10px;
+	font-weight: bold;
+	text-decoration: none;
+	margin-bottom: 15px;
+	margin-top: 15px;
+	margin-left: 10px;
+	margin-right: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.blocks {
+	display: flex;
+	justify-content: top;
+	padding: 15px;
+	width: 25%;
+}
+
+.side-search {
+	height: 550px;
+	padding: 8px;
+	align-items: center;
+	background-color: var(--main-bg-color-lightblue);
+	p {
+		font-size: medium;
+		margin: 4px;
+	}
+	border-radius: 4%;
+	box-shadow: 10px 10px 10px var(--main-bg-color-blue);
+}
+
+@media (min-width: 320px) and (max-width: 1024px) {
+	.container4buttons {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		margin: 1px;
+		column-gap: 1px;
+	}
+
+	.nav-buttons .footer-btn {
+		width: 110px;
+		margin: 2px;
+		justify-content: center !important; /* Override Bootstrap */
+	}
+
+	.form-container {
+		width: 300px;
+		padding: 5px;
+	}
+
+	.text-container1 .text-container1 {
+		h2 {
+			font-weight: bold;
+		}
+		textarea {
+			height: 100px;
+		}
+	}
+
+	p {
+		font-size: 15px;
+		text-align: justify;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.p-footer {
+		font-size: 6px;
+	}
+
+	footer {
+		margin-top: 5px;
+	}
+}
+
+.test {
+	border: 2px solid pink;
+}

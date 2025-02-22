@@ -13,7 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
-    //List all users
+    /*ALL THIS NOT NEEDED NOW. USERS FOR NOW DONT SEE THEIR PROFILE, ADMIN DOES CRUD. FOR NEW USER, THERE IS REGISTRATION
+    //List all users */
     #[Route('/user', name: 'app_user')] 
     public function index(UserRepository $userRepository): JsonResponse //Response??? it was the automatic one
     {   $users = $userRepository->findAll(); //fetch all the users
@@ -33,7 +34,7 @@ class UserController extends AbstractController
     }
 
     //show one specific user
-    #[Route('/user/{id}', name: 'app_user{id}')] 
+    /*#[Route('/user/{id}', name: 'app_user{id}')] 
     public function show(User $user): JsonResponse {
         $data = [
             "id" => $user->getId(),
@@ -47,7 +48,7 @@ class UserController extends AbstractController
         return new JsonResponse($data, JsonResponse::HTTP_OK);
     }
 
-
+    #[Route('/user/create', name: 'app_user_create')] 
     public function create(Request $request, EntityManagerInterface $entityManager): JsonResponse {
         //fetch json data of request
         $data = json_decode($request->getContent(), true );
@@ -68,9 +69,7 @@ class UserController extends AbstractController
         $entityManager->flush();
 
         return new JsonResponse(["status" => "User created"], JsonResponse::HTTP_CREATED);
-    }
+    }*/
 
 
 }
-
-

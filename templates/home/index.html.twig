@@ -3,5 +3,84 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-Hello world!
+
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="home" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/search" role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/new" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="about" role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="login" role="button">Login</a>
+        </div>
+      </div>
+    </header>
+    <main>
+    <link rel="stylesheets" href="{{ asset('styles/style-index.css') }}">
+      <section class="full-section test">
+        <div class="homeImg">
+          <a href="article-page.html" class="background-link background-image">
+          </a>
+        </div>
+        <div class="overlay-container text-white test">
+          <div class="overlay1 test" height="100px">
+          <img src="{{ asset('styles/images/LOGO_WHITE.png') }}" class="logo" width="300px">
+          </div>
+          <div class="overlay2 test">
+            <h3>
+              The first interactive blog for travellers. <br />
+              Let us take you to your next destination!
+            </h3>
+          </div>
+          <div class="overlay3 test">
+            <h5>You may write about your own trips or simply check out other travellers’ adventures.</h5>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class=" test">
+     <div class="container test"> 
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="contact" role="button">Contact</a>
+        </div>
+        <div class="nav-buttons my-custom-button footer-btn ">
+          <a class="btn text-white fw-bold" href="Cookies-policy.html" role="button" >Cookies</a>
+        </div>
+        <div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="Privacy-policy.html" role="button">Confidentiality</a>
+        </div>
+        <div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="Legal-terms.html" role="button" >Legal terms</a>
+        </div>
+      </div>
+     </div>
+      
+
+      <div class="d-flex justify-content-center">
+        <a href="https://www.facebook.com" class="icon-button" target="_blank"> <i class="fa-brands fa-facebook-f"></i> </a>
+        <a href="https://www.instagram.com" class="icon-button" target="_blank"> <i class="fa-brands fa-instagram"> </i> </a>
+        <a href="https://x.com/Accueil" class="icon-button" target="_blank"> <i class="fa-brands fa-twitter"> </i> </a>
+        <a href="https://www.flickr.com/" class="icon-button" target="_blank"> <i class="fa-brands fa-flickr"> </i> </a>
+      </div>
+      <div class="d-flex justify-content-center">
+        <p class="p-footer">Copyright&copy; 2024 Your Journey. All Rights Reserved</p>
+      </div>
+    </footer>
+
 {% endblock %}

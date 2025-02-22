@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType; 
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-// USE Symfony\Component\Validator\Constraints\Count; for photos addition
+// use Symfony\Component\Validator\Constraints\Count; for photos addition
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
@@ -33,6 +33,7 @@ class ArticleType extends AbstractType
                     'placeholder' => 'Write your article content here...',
                     ],
                 ])
+            ->add('publishedAt')
             ->add('photo');
     }
 

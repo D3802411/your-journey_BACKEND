@@ -22,7 +22,7 @@ final class AdminUserController extends AbstractController
         ]);
     }
     //Useless to create new users as admin as I can do it as USER. Besides, for security reasons I don't want to deal with existent users' passwords, so there is no field in the form.
-    #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
+    /*#[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -41,7 +41,7 @@ final class AdminUserController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    // show one user 
     #[Route('/{id}', name: 'app_admin_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
@@ -77,5 +77,5 @@ final class AdminUserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
-    }
+    }*/
 }

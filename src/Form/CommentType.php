@@ -18,6 +18,7 @@ class CommentType extends AbstractType
                 'label' => 'Comment',
                 'attr' => ['placeholder' => 'Write your comment here...'],
             ]);
+            //->add('publishedAt')
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -22,6 +23,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null; // The $id property starts as null because the entity has not been persisted (saved) in the database yet.
 
     #[ORM\Column(length: 180)]
+    #[Assert\Email(
+        message: '{{ value }} is not a valid email address'
+    )]
     private ?string $email = null;
 
     /**
@@ -34,15 +38,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Password cannot be blank.")]
+    #[Assert\Length(min: 12)]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&]).{12,}$/', 
+        message: 'Password must be at least 12 characters long, must contain 1 number, 1 uppercase, 1 lowercase and 1 special character',
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "FirstName cannot be blank.")]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    //#[Assert\NotBlank(message: "LastName cannot be blank.")]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Username cannot be blank.")]
     public ?string $username = null;
 
     /**

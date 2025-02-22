@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>{{ article.title }}</h1>
-    <h4>{{ article.user.username }}</h4>
+    <p>{{ article.user.username }}</p> added this article on {{ article.publishedAt|date('d/m/Y') }}</p>
     <table class="table">
         <tbody>
             <tr>
@@ -40,6 +40,7 @@
                 <th>Text Area</th>
                 <td>{{ article.textArea }}</td>
             </tr>
+
             <tr>
                 <th>Photo</th>
                 <td>{{ article.photo ? 'Yes' : 'No' }}</td>
@@ -67,7 +68,7 @@
         <li>
             <td>
             {% for comment in comments %}
-                <p><strong>{{ comment.user.username }}</strong></p>
+                <p><strong>{{ comment.user.username }}</strong>added this comment on {#{{ comment.publishedAt|date('d/m/Y') }} #}</p>
                 {{ comment.content }}
                 {% if user is same as(comment.user) %}
                 <a href="{{ path('app_article_edit_comment', {'id': comment.id}) }}">Edit</a>
