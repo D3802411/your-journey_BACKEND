@@ -1,0 +1,25 @@
+:root {
+	--main-bg-color-white: white;
+	--main-bg-color-blue: rgb(49, 139, 142);
+	--main-bg-color-darkblue: rgb(2, 50, 58);
+	--main-bg-color-lightblue: rgb(217, 238, 237);
+}
+
+body {
+	background-color: white;
+}
+
+.main-section {
+	margin-left: 40px;
+	margin-right: 40px;
+	justify-content: center;
+}
+
+h1 {
+	color: #318b8e;
+	font-weight: bold;
+}
+
+p {
+	color: rgb(2, 50, 58);
+}

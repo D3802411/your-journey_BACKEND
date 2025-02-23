@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AboutController!{% endblock %}
+
+{% block body %}
+
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="home" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/search" role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/new" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="about" role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="login" role="button">Login</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+        <link rel="stylesheets" href="{{ asset('styles/style-formpages.css') }}">
+    	<section class="main-section">
+            <div class="title-footers">
+                <h1>About us</h1>
+            </div>
+            <div>
+            <img src="{{ asset('styles/images/Globetrotters_Logo.png') }}" alt="The Globetrotters">
+            </div>
+            <div>
+                <p>
+                    Our philosophy is: everything travel! </br>
+                    Whether it is a no fixed plans, fully nomad trip, or accompanied step by step by a travel agency, 
+                    we will love to hear from you about your best or worst experiences. 
+                    At the end of the world or simply in your backyard everry trip deserves a story.
+                    Share your adventure with us!</br>
+                    We celebrate the art of independent travel—moving freely, embracing the unknown, 
+                    and discovering the world without limits. Nontheless, we are happy to hear of any kind of trip.
+                    </br>We cherish immersing in each culture, forging connections, and discovering something precious everywhere we go.
+                    </br>We encourage the essence of travel beyond destinations. 
+                    We believe in the richness of the journey, in finding meaning on the road in a true nomad spirit.
+                    </br>
+                    Travel is a way of life, a philosophy of openness, curiosity, and discovery. 
+                    It's YOUR journey. Come and join our community!</br>
+                    #YourJourney #TravelDeep #WanderWithPurpose
+
+                </p>
+
+                </div>
+        </section>
+    </main>
+{% endblock %}

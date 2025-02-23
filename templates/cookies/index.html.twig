@@ -1,9 +1,9 @@
-{# templates/article/search.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Search Article{% endblock %}
+{% block title %}Hello CookiesController!{% endblock %}
 
 {% block body %}
+
 
     <header class="container test">
       <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
@@ -30,24 +30,17 @@
         </div>
       </div>
     </header>
+
     <main>
         <link rel="stylesheets" href="{{ asset('styles/style-formpages.css') }}">
-    	<section style="background-image: url('{{ asset('styles/images/image1.png') }}')" class="section-bg">
-            <div class="form-container">
-                <h1>Search</h1>
-                {{ form_start(form) }}
-                    {{ form_row(form.place, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}
-                    {{ form_row(form.city, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}
-                    {{ form_row(form.country, {'attr': {'style': 'width: 350px; height: 25px;'}}) }} 
-                    {{ form_row(form.attraction, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}
-                    {{ form_row(form.activity, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}                       
-                    {{ form_row(form.title, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}
-                    <div class="btn-container d-flex justify-content-center mt-4">
-                        <button type="submit" class="btn submit-btn btn-lg btn-primary text-white fw-bold btn-link">Search</button>
-                    </div>
-                {{ form_end(form) }}
+    	<section class="main-section">
+            <div class="title-footers">
+            <h1>Cookies</h1>
+            </div>
+            <div>
+                <p>When you browse YOUR JOURNEY website, cookies are stored in your browser. For some cookies, your consent is required. Click on each cookie type to enable or disable their use. In order to use all the features offered by the YOUR JOURNEY website (sharing articles, website improvement based on browsing data, etc.), we recommend keeping all types of cookies activated.
+            </p>
             </div>
         </section>
-    </main>
-
+    </main>    
 {% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LegalTermsController!{% endblock %}
+
+{% block body %}
+
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="home" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/search" role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/new" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="about" role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="login" role="button">Login</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+        <link rel="stylesheets" href="{{ asset('styles/style-formpages.css') }}">
+    	<section class="main-section">
+            <div class="title-footers">
+            <h1>Legal terms</h1>
+            </div>
+            <div>
+                <p>
+                    Effective Date: 4th of March 2025 </br>
+                    Welcome to YOUR JOURNEY Organisation.
+                    By accessing or using our website yourjourney.org (the "Website") and services (the "Services"), you agree to comply with and be bound by these Terms and Conditions.
+                <ol>
+                    <li>
+                        Publication Director</br>
+                        Déborah Bocchi
+                    </li></br>
+                    <li>
+                        Publisher</br>
+                        The Globetrotters Organisation, Register under number RCS Paris B, 10 rue de l'Equerre - 75019 PARIS.
+                    </li></br>
+                    <li>
+                        Hosting</br>
+                        This application is hosted on Microsoft Cloud (Azure). It is geographically located in Microsoft's data center in "France Central".
+                        For more information, please refer to the following links:
+                        <a href="https://azure.microsoft.com/fr-fr/support/legal/">Mentions légales Microsoft Azure</a>
+                        <a href="https://www.microsoft.com/fr-fr/trust-center/privacy">La confidentialité chez Microsoft</a></br>
+                        The infrastructure is managed by SimplicIT, located at:
+                        8 Rue de l'Est, 92100 Boulogne-Billancourt
+                        http://www.simplicit.eu</br>
+
+The application was developed by SimplicIT, at the same address:
+8 Rue de l'Est, 92100 Boulogne-Billancourt
+http://www.simplicit.eu</br>
+
+Digital archiving and electronic signature services are delegated to Cryptolog, located at:
+6-8 Rue Basfroi, 75011 Paris
+Registered with RCS Paris B 439 129 164
+http://www.universign.eu
+</li></br>
+<li>
+Technical Requirements</br>
+Browser Versions and Display
+This site is optimized for a 1280 x 1024 pixel display on the following browsers:</br>
+
+Microsoft Internet Explorer version 11.x or higher
+Microsoft Edge version 25.x or higher
+Mozilla Firefox version 42.x or higher
+Google Chrome version 46.x or higher
+However, differences in how browsers interpret code may result in variations in display and navigation.
+If your browser does not meet these requirements, you can download the latest versions from the respective companies' websites.
+                        </li></br>
+                        <li>
+                            Plug-ins</br>
+                            All documents available for download or online editing on this site are in PDF format and can only be viewed with Adobe Acrobat Reader (or another compatible PDF viewer).
+                            If you do not have this software or wish to download the latest version, click the following link:
+                            http://get.adobe.com/fr/reader/
+                        </li></br>
+                        <li>
+    Security of Restricted Areas</br>
+    For your security, communications between your computer and our website server are encrypted using the SSL/TLS v1.2 protocol at a minimum.
+
+    Privacy in Restricted Areas</br>
+    All access to the site is secured, ensuring the confidentiality of the information exchanged to perform certain online actions.
+</li></br>
+<li>
+Acceptance of Terms</br>
+    By accessing or using our Website and Services, you confirm that you have read, understood, and agree to these Terms. If you do not agree, please do not use our Services.
+</li></br>
+<li>
+Changes to Terms</br>
+We reserve the right to modify these Terms at any time. Your continued use of the Website after updates constitutes acceptance of the new Terms.
+</li></br>
+<li>
+                        User Responsibilities</br>
+You must be at least 18 years old to use our Services.
+You agree not to use the Website for illegal activities.
+You must provide accurate information when required.
+</li>
+{#<li>
+Intellectual Property
+All content on the Website, including text, images, logos, and software, is owned by YOUR JOURNEY Organisation or its licensors and is protected under copyright and trademark laws.
+</li>
+<li>
+Limitation of Liability
+To the maximum extent permitted by law, France is not liable for any direct, indirect, incidental, or consequential damages resulting from the use of our Services.
+</li>
+<li>
+Privacy Policy
+Your use of the Services is also governed by our Privacy Policy, available at yourjourney/confidentiality.
+</li>
+<li>
+Termination
+We reserve the right to terminate or suspend your access to the Services if you violate these Terms.
+</li>
+<li>
+Governing Law
+These Terms are governed by the laws of France. Any disputes shall be resolved in the courts of [Your Jurisdiction].
+</li>
+<li>
+Contact Information
+For any questions about these Terms, please contact us at yourjourney/contact
+</li> #}
+                        </ol>
+                    </p>
+                        </div>
+                </div>
+        </section>
+    </main>
+{% endblock %}

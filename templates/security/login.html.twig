@@ -4,6 +4,31 @@
 
 {% block body %}
 
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="home" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/search" role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/new" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="about" role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="login" role="button">Login</a>
+        </div>
+      </div>
+    </header>
 
     <main>
         <link rel="stylesheets" href="{{ asset('styles/style-formpages.css') }}">
@@ -20,22 +45,20 @@
 
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
-        >
-                        <h4>Or sign up <a href="/register">here</a></h4>
-            {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+        >           
+                {#
+                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html
 
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
-                </div>
+                    <div class="checkbox mb-3">
+                        <input type="checkbox" name="_remember_me" id="_remember_me">
+                        <label for="_remember_me">Remember me</label>
+                    </div> 
+                    <input type="submit" value="Back" id="back" class="submit-btn text-white fw-bold" />
                  #}
 					<div class="btn-container">
                     <button class="btn btn-lg submit-btn btn-primary" type="submit">Sign in</button>
-                    <input type="submit" value="Back" id="back" class="submit-btn text-white fw-bold" />
-						</a>
-
+                    <a href="{{ path('app_home') }}" class='btn btn-lg submit-btn btn-primary'>Home</a>
                     </div>
                                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -46,11 +69,11 @@
                 You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
                     </div>
                 {% endif %}
-
-                    <button class="btn btn-primary"><a href="{{ url('app_reset_password')}}">Forgot your password? Send password reset email</a></button>
+                    <div>
+                        <h4>Not subscribed yet? Sign up <a href="/register">here</a></h4>
+                    </div>
+                        <a href="{{ path('app_forgot_password_request') }}" class='btn btn-lg btn-primary'>Forgot your password? Send password reset email</a></button>
                 </form>
-
-
         </section>
 
 {% endblock %}

@@ -4,28 +4,54 @@
 
 {% block body %}
 
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="home" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/search" role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/new" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="about" role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="login" role="button">Login</a>
+        </div>
+      </div>
+    </header>
 
     <main>
         <link rel="stylesheets" href="{{ asset('styles/style-formpages.css') }}">
-    	<section style="background-image: url('{{ asset('styles/images/Image2.png') }}')" class="section-bg test">
+    	<section style="background-image: url('{{ asset('styles/images/Image2.png') }}')" class="section-bg">
             <div class="central-objects"> 
                 <div class="form-container">
-                    <h1>Register</h1>
-                    <div class="text-container">
+                    <h1>Register</h1> </br>
+                    <div class="d-flex">
                         {{ form_errors(registrationForm) }}
 
                         {{ form_start(registrationForm) }}
-                            {{ form_row(registrationForm.firstName) }}
-                            {{ form_row(registrationForm.lastName) }}
-                            {{ form_row(registrationForm.email) }}
-                            {{ form_row(registrationForm.username) }}
+                            {{ form_row(registrationForm.firstName, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}
+                            {{ form_row(registrationForm.lastName, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}
+                            {{ form_row(registrationForm.email, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}
+                            {{ form_row(registrationForm.username, {'attr': {'style': 'width: 350px; height: 25px;'}}) }}
                             {{ form_row(registrationForm.plainPassword, {
-                                label: 'Password'
+                                label: 'Password', 'attr': {'style': 'width: 350px; height: 25px;'}
                                 }) }}
+                            </br>
                             {{ form_row(registrationForm.agreeTerms) }}
                     </div>
-                    <div class="btn-container">
-                        <button type="submit" class="btn submit-btn text-white fw-bold">Register</button>
+                    <div class="btn-container d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn submit-btn btn-lg btn-primary text-white fw-bold">Register</button>
                     </div>
                 
                         {{ form_end(registrationForm) }}

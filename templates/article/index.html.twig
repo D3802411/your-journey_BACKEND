@@ -3,49 +3,84 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
-    <h1>Article index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Place</th>
-                <th>City</th>
-                <th>Country</th>
-                <th>Attraction</th>
-                <th>Activity</th>
-                <th>Title</th>
-                <th>Text Area</th>
-                <th>Photo</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.place }}</td>
-                <td>{{ article.city }}</td>
-                <td>{{ article.country }}</td>
-                <td>{{ article.attraction }}</td>
-                <td>{{ article.activity }}</td>
-                <td>{{ article.title }}</td>
-                <td>{{ article.textArea }}</td>
-                <td>{{ article.photo ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_article_show', {'slug': article.slug, 'id': article.id}) }}">Show</a>
-                    {% if user is same as(article.user) %}
-                    <a href="{{ path('app_article_edit', {'slug': article.slug, 'id': article.id}) }}">Edit</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="home" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/search" role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="article/new" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="about" role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="login" role="button">Login</a>
+        </div>
+      </div>
+    </header>
 
-    <a href="{{ path('app_article_new') }}">Create new</a>
+    <main>
+        <link rel="stylesheets" href="{{ asset('styles/style-footers.css') }}">
+    	<section class="main-section">
+            <div class="title-footers">
+                <h1>Articles list</h1>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                            <th>Place</th>
+                            <th>City</th>
+                            <th>Country</th>
+                            <th>Attraction</th>
+                            <th>Activity</th>
+                            <th>Title</th>
+                            <th>Text Area</th>
+                            <th>Photo</th>
+                            <th>actions</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    {% for article in articles %}
+                        <tr>
+                            <td>{{ article.id }}</td>
+                            <td>{{ article.place }}</td>
+                            <td>{{ article.city }}</td>
+                            <td>{{ article.country }}</td>
+                            <td>{{ article.attraction }}</td>
+                            <td>{{ article.activity }}</td>
+                            <td>{{ article.title }}</td>
+                            <td>{{ article.textArea }}</td>
+                            <td>{{ article.photo ? 'Yes' : 'No' }}</td>
+                            <td>
+                                <a href="{{ path('app_article_show', {'slug': article.slug, 'id': article.id}) }}">Show</a>
+                            {% if user is same as(article.user) %}
+                                <a href="{{ path('app_article_edit', {'slug': article.slug, 'id': article.id}) }}">Edit</a>
+                            {% endif %}
+                            </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                            <td colspan="11">no records found</td>
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ path('app_article_new') }}">Create new</a>
+
+
+        </section>
+    </main>
 {% endblock %}

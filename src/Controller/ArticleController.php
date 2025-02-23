@@ -238,7 +238,8 @@ final class ArticleController extends AbstractController
     #[Route('/search_results', name: 'app_article_search_results', methods: ['GET'])]
     public function displayResults(Request $request, ArticleRepository $articleRepository): Response
     {   // Retrieve the search criteria from the query parameters
-        $query = $request->query->all();
+        $query = $request->query->all(); //MAYBE HERE THE ISSSUE: NOT ALL BUT QUERY RESULT! look up in the docs for query methods, like findResult...
+    
         // Fetch articles using the repository method
         $articles = $articleRepository->findBySearchQuery($query);
         return $this->render('article/search_results.html.twig', [

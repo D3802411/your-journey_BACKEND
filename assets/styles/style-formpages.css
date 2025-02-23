@@ -142,7 +142,6 @@ p {
 
 /* create article form */
 .article-container {
-	height: auto;
 	width: 80%;
 	margin: 0 auto;
 	margin-top: 15px;
@@ -275,6 +274,6 @@ p {
 	}
 }
 
-.test {
+/*.test {
 	border: 2px solid pink;
-}
+} */
