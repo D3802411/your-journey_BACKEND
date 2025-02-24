@@ -3,7 +3,33 @@
 {% block title %}Search results{% endblock %}
 
 {% block body %}
-{# here goes (A VARIABLE ??) the array that represents the search results #}
+
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_home') }}" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_index') }}" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_search') }}"  role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_new') }}" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_about') }}"  role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="{{ path('app_login') }}"  role="button">Login</a>
+        </div>
+      </div>
+    </header>
+
    <h1>Search Results</h1>
     {# Check if there are any articles to display #}
     {% if articles is not empty %}

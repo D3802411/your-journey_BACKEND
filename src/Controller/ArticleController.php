@@ -33,26 +33,6 @@ final class ArticleController extends AbstractController
         ]);
     }
  
-    /* #[Route('/api/article', name: 'app_article_api', methods: ['GET'])]
-    public function getList(ArticleRepository $articleRepository): JsonResponse
-                {
-                    $articles = $articleRepository->findAll() ;
-                    // $api4json = json_decode($articles) ;
-                    $api4json = array_map(function (Article $article) {
-                        return [
-                            'id' =>$article->getid(),
-                            'place' => $article->getPlace(),
-                            'city' => $article->getCity(),
-                            'country' => $article->getCountry(),
-                            'attraction' => $article->getAttraction(),
-                            'activity' => $article->getActivity(),
-                            'title' => $article->getTitle(),
-                        ];
-                    }, $articles);
-                    return new JsonResponse($api4json, JsonResponse::HTTP_OK); 
-                } */
-
-
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -91,7 +71,8 @@ final class ArticleController extends AbstractController
         // Get the currently logged-in user: if it's here, do I still have to add it in every if?
         $user = $this->getUser();
         $title = $article->getTitle(); // Get the title from the article entity
-        $slug = $slugger->slug($article->getTitle())->toString();
+        $slug = strtolower($slugger->slug($article->getTitle())->toString());
+        //$slug = $slugger->slug($article->getTitle())->toString();
         // Fetch the article from the database
         $article = $entityManager->getRepository(Article::class)->findOneBy([
             'id' => $id,
@@ -115,7 +96,7 @@ final class ArticleController extends AbstractController
             return $this->redirectToRoute('app_article_show', ['slug' => $slug,'id' => $article->getId()], Response::HTTP_SEE_OTHER);
             }
 
-            //comment edition
+            //comment edition: see route below
             //comment deletion: see route below
          
      
@@ -195,43 +176,27 @@ final class ArticleController extends AbstractController
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/search', name: 'app_article_search', methods: ['GET'])]
+    #[Route('/search', name: 'app_article_search', methods: ['GET','POST'])]
     public function search(Request $request, ArticleRepository $articleRepository): Response
     {   
         // Create the search form   DO I STILL NEED THIS
-        $form = $this->createForm(SearchArticleType::class);
+        $form = $this->createForm(SearchArticleType::class); 
         // Handle the form submission
         $form->handleRequest($request);
 
-        $articles = [];  // Initialize an empty array to store search results
+        //$articles = [];  // Initialize an empty array to store search results
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Get the search data
             $query = $form->getData();
             // Fetch articles using the Article repository 
-            $articles = $articleRepository->findBySearchQuery($query);
+            //$articles = $articleRepository->findBySearchQuery($query);
             // NEW PAGE WITH RESULTS is INDEED a new route, as it's gives back an array of results
-            return $this->redirectToRoute('app_article_search_results', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_search_results', $query); //[], Response::HTTP_SEE_OTHER);
         }
-
-                
-        // Build the $query array from request parameters
-        // $query = [
-        //    'place' => $request->query->get('place', ''),
-         //   'city' => $request->query->get('city', ''),
-        //    'country' => $request->query->get('country', ''),
-        //    'attraction' => $request->query->get('attraction', ''),
-        //    'activity' => $request->query->get('activity', ''),
-        //    'title' => $request->query->get('title', ''),
-
-        //];
-       
-        // Use the ArticleRepository to search articles
-         //  $articles = $articleRepository->searchArticles($data); // Custom repository method
-     
         return $this->render('article/search.html.twig', [
-           'form' => $form->createView(),
-           'articles' => $articles,  // Pass the results to the template
+           'form' => $form,
+           //'articles' => $articles,  // Pass the results to the template
         ]);
     }
 

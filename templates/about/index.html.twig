@@ -7,25 +7,25 @@
     <header class="container test">
       <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
         <div class="logo-box test">
-          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="100px" >
         </div>
         <div class="nav-buttons my-custom-button ">
-          <a class="btn text-white fw-bold" href="home" role="button" >Home</a>
+          <a class="btn text-white fw-bold" href="{{ path('app_home') }}" role="button" >Home</a>
         </div>
         <div class="nav-buttons my-custom-button ">
-          <a class="btn text-white fw-bold" href="article" role="button" >What's new</a>
+          <a class="btn text-white fw-bold" href="{{ path('app_article_index') }}" role="button" >What's new</a>
         </div>
         <div class="nav-buttons my-custom-button ">
-          <a class="btn text-white fw-bold" href="article/search" role="button">Search</a>
+          <a class="btn text-white fw-bold" href="{{ path('app_article_search') }}"  role="button">Search</a>
         </div>
         <div class="nav-buttons my-custom-button ">
-          <a class="btn text-white fw-bold" href="article/new" role="button" >Tell us</a>
+          <a class="btn text-white fw-bold" href="{{ path('app_article_new') }}" role="button" >Tell us</a>
         </div>
         <div class="nav-buttons my-custom-button ">
-          <a class="btn text-white fw-bold" href="about" role="button"> About</a>
+          <a class="btn text-white fw-bold" href="{{ path('app_about') }}"  role="button"> About</a>
         </div>
         <div class="login-btn submit-btn ">
-          <a class="btn text-white fw-bold" href="login" role="button">Login</a>
+          <a class="btn text-white fw-bold" href="{{ path('app_login') }}"  role="button">Login</a>
         </div>
       </div>
     </header>
@@ -34,11 +34,11 @@
         <link rel="stylesheets" href="{{ asset('styles/style-formpages.css') }}">
     	<section class="main-section">
             <div class="title-footers">
-                <h1>About us</h1>
+                <h1>About us:</h1>
             </div>
             <div>
-            <img src="{{ asset('styles/images/Globetrotters_Logo.png') }}" alt="The Globetrotters">
-            </div>
+            <img src="{{ asset('styles/images/Globetrotters_Logo.png') }}" alt="The Globetrotters" width="500px">
+            </div></br>
             <div>
                 <p>
                     Our philosophy is: everything travel! </br>

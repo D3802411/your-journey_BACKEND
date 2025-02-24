@@ -61,6 +61,7 @@
     {{ form_start(form) }}
         {{ form_row(form.content) }}
         <button class="btn">Submit</button>
+        
     {{ form_end(form) }}
 
     <h2>Comments</h2>
@@ -70,7 +71,8 @@
             {% for comment in comments %}
                 <p><strong>{{ comment.user.username }}</strong>added this comment on {#{{ comment.publishedAt|date('d/m/Y') }} #}</p>
                 {{ comment.content }}
-                {% if user is same as(comment.user) %}
+
+                {% if user is same as(comment.user) %}                
                 <a href="{{ path('app_article_edit_comment', {'id': comment.id}) }}">Edit</a>
                 {{ include('article/_delete_comment.html.twig') }}
                 {% endif %}
