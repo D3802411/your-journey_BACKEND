@@ -24,3 +24,49 @@ body {
 p {
 	color: rgb(2, 50, 58);
 }
+
+/* max-width: 1279    it's for tablets*/
+@media (min-width: 320px) and (max-width: 1024px) {
+	.container4buttons {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		margin: 1px;
+		column-gap: 1px;
+	}
+
+	.nav-buttons {
+		width: 120px;
+		font-size: small;
+		text-align: center;
+	}
+
+	.background-image {
+		object-fit: cover;
+	}
+
+	.overlay-container {
+		position: absolute;
+		top: 80%;
+		left: 50%;
+		text-align: left;
+		color: rgb(255, 255, 255);
+		.logo {
+			width: 200px;
+			height: auto;
+		}
+		h3,
+		h5 {
+			font-size: 15px;
+			text-justify: distribute;
+		}
+	}
+
+	.p-footer {
+		font-size: 6px;
+	}
+
+	footer {
+		margin-top: 5px;
+	}
+}

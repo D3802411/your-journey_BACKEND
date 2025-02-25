@@ -26,7 +26,7 @@ class ApiCommentController extends AbstractController
     }
 
     
-    
+    /*
     #[Route('/api/comment/{id}', ['id' => '\d+'], methods: ['GET', 'POST'])] //POST because I must send it to the moderation servcie
     public function commentModerate(CommentRepository $commentRepository, HttpClientInterface $httpClient): JsonResponse  //why JSON? Because is a standard format for data exchange, supported by almost all programming languages
     {         
@@ -45,9 +45,9 @@ class ApiCommentController extends AbstractController
         }
             
             return $this->json($lastComment, 200, [], ['groups' => ['comments.index']
-        ]);
+        ]); 
 
-    }
+    }*/
 
 
 }

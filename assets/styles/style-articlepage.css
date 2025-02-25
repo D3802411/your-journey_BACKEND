@@ -2,323 +2,314 @@
 
 /* root - Set a background color and padding for the document's root element */
 :root {
-  --main-bg-color-white: white;
-  --main-bg-color-blue: rgb(49, 139, 142);
-  --main-bg-color-darkblue: rgb(2, 50, 58);
-  --main-bg-color-lightblue: rgb(217, 238, 237);
+	--main-bg-color-white: white;
+	--main-bg-color-blue: rgb(49, 139, 142);
+	--main-bg-color-darkblue: rgb(2, 50, 58);
+	--main-bg-color-lightblue: rgb(217, 238, 237);
 }
 
 body {
-  font-family: "Lato", "sans-serif", "arial", "verdana" !important ;
-  background-color: var(bg-color-white);
+	font-family: "Lato", "sans-serif", "arial", "verdana" !important ;
+	background-color: var(bg-color-white);
 }
 
 /* same BS class for header and footer */
-.container {   
-  margin-top: 1px;
-  display: flex;
-  justify-content: center;
+.container {
+	margin-top: 1px;
+	display: flex;
+	justify-content: center;
 }
 
 .container4buttons {
-  justify-content: center;
-  width: 100%;
-  padding: 1px;
+	justify-content: center;
+	width: 100%;
+	padding: 1px;
 }
 
 .nav-buttons {
-  cursor: pointer;
-  padding: 2px;  
-  width: 170px;
-  margin-top: 2px;
-  margin: 4px;
-  text-align: center;
-  background-color: var(--main-bg-color-blue);
-  border-radius: 4%;
+	cursor: pointer;
+	padding: 2px;
+	width: 170px;
+	margin-top: 2px;
+	margin: 4px;
+	text-align: center;
+	background-color: var(--main-bg-color-blue);
+	border-radius: 4%;
 }
 
 .logo-box {
-  width: 120px;
+	width: 120px;
 }
 
 .footer-btn {
-  margin-top: 2px; 
+	margin-top: 2px;
 }
 
 .submit-btn {
-  cursor: pointer;
-  width: 120px;
-  margin: 8px;
-  padding: 5px;
-  align-items: center;
-  text-align: center;
-  background-color: var(--main-bg-color-darkblue);
-  border-radius: 6%;
+	cursor: pointer;
+	width: 120px;
+	margin: 8px;
+	padding: 5px;
+	align-items: center;
+	text-align: center;
+	background-color: var(--main-bg-color-darkblue);
+	border-radius: 6%;
 }
 
 /* ///////////////  END NAV BUTTONS HERE */
 
-
 /* FOOTER CSS */
 .p-footer {
-  font-size: 10px;
+	font-size: 10px;
 }
 
 footer {
-  margin-top: 10px;
+	margin-top: 10px;
 }
 
 .icon-button {
-  width: 25px;
-  margin: 4px;
+	width: 25px;
+	margin: 4px;
 }
 
 .social-buttons {
-  width: 100%;
-  height: 30px;
-  cursor: pointer;
-  font-size: 15px;
-  text-align: center;
-  text-size-adjust: 10px;
-  font-weight: bold;
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
+	width: 100%;
+	height: 30px;
+	cursor: pointer;
+	font-size: 15px;
+	text-align: center;
+	text-size-adjust: 10px;
+	font-weight: bold;
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
 }
-
 
 /* SEARCH FORM CSS */
 
 .side-search {
-  height: 550px;
-  padding: 8px;
-  align-items: center;
-  background-color: var(--main-bg-color-lightblue);
-  p {
-    font-size: medium;
-    margin: 4px;
-  }
-  border-radius: 4%;
-  box-shadow: 10px 10px 10px var(--main-bg-color-blue);
+	height: 550px;
+	padding: 8px;
+	align-items: center;
+	background-color: var(--main-bg-color-lightblue);
+	p {
+		font-size: medium;
+		margin: 4px;
+	}
+	border-radius: 4%;
+	box-shadow: 10px 10px 10px var(--main-bg-color-blue);
 }
 
 .text-container1 {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  h2 {
-    color: var(--main-bg-color-darkblue);
-    font-weight: bolder;
-  }
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	h2 {
+		color: var(--main-bg-color-darkblue);
+		font-weight: bolder;
+	}
 }
 
-
 .btn-container {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  margin-top: 4px;
+	display: flex;
+	justify-content: space-between;
 }
 
 .place,
 .country,
 .attraction,
 .activity {
-  width: 95%;
-  height: 25px;
-  margin-right: 5px;
-  margin-left: 5px;
+	width: 95%;
+	height: 25px;
+	margin-right: 5px;
+	margin-left: 5px;
 }
 
 /* //////////////////////////   POSTS+SERACH FORM START HERE   */
 .content {
-  display: flex;
+	display: flex;
 }
 
 .posts {
-  display: flex;
-  justify-content: right;
-  flex-direction: column;
-  padding: 8px;
-  width: 75%;
-  background-color: var(--main-bg-color-white, white);
-  color: var(--main-bg-color-blue, black);
+	display: flex;
+	justify-content: right;
+	flex-direction: column;
+	padding: 8px;
+	width: 75%;
+	background-color: var(--main-bg-color-white, white);
+	color: var(--main-bg-color-blue, black);
 }
 
 .post1 {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10px;
-  border: 1px solid;
-  border-color: var(--main-bg-color-blue);
-  border-radius: 3%;
-  margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: 10px;
+	border: 1px solid;
+	border-color: var(--main-bg-color-blue);
+	border-radius: 3%;
+	margin-bottom: 10px;
 }
 
 .post1 h2 {
-  margin-top: 15px;
-  font-size: 30px;
-  font-weight: bold;
-  text-align: center;
+	margin-top: 15px;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
 }
 
 .post1 h3 {
-  font-size: 20px;
-  font-weight: 100;
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 15px;
+	font-size: 20px;
+	font-weight: 100;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 15px;
 }
 
 .title-descrptions {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 p {
-  font-size: 18px;
-  text-align: justify;
+	font-size: 18px;
+	text-align: justify;
 }
 
 .post1 p {
-  font-size: 15px;
-  font-weight: 100;
-  text-align: justify;
-  margin-top: 15px;
-  padding: 15px;
+	font-size: 15px;
+	font-weight: 100;
+	text-align: justify;
+	margin-top: 15px;
+	padding: 15px;
 }
 
 .thumbnail {
-  width: 300px;
-  padding: 5px;
-  border: 1px solid;
+	width: 300px;
+	padding: 5px;
+	border: 1px solid;
 }
 
 .img-container {
-  width: 100%;
-  object-fit: cover;
+	width: 100%;
+	object-fit: cover;
 }
 
 .buttons {
-  width: 100%;
-  height: 30px;
-  cursor: pointer;
-  font-size: 15px;
-  text-align: center;
-  text-size-adjust: 10px;
-  font-weight: bold;
-  text-decoration: none;
-  margin-bottom: 15px;
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
+	width: 100%;
+	height: 30px;
+	cursor: pointer;
+	font-size: 15px;
+	text-align: center;
+	text-size-adjust: 10px;
+	font-weight: bold;
+	text-decoration: none;
+	margin-bottom: 15px;
+	margin-top: 15px;
+	display: flex;
+	justify-content: space-between;
 }
 
-
 .like-button {
-  background-color: var(--main-bg-color-white, white);
-  color: var(--main-bg-color-blue, black);
-  margin-bottom: 5px;
+	background-color: var(--main-bg-color-white, white);
+	color: var(--main-bg-color-blue, black);
+	margin-bottom: 5px;
 }
 
 .comment-button {
-  background-color: var(--main-bg-color-blue, black);
-  color: var(--main-bg-color-white, white);
-  margin-bottom: 5px;
+	background-color: var(--main-bg-color-blue, black);
+	color: var(--main-bg-color-white, white);
+	margin-bottom: 5px;
 }
 
 .line-space {
-  height: 1px;
-  width: 100%;
-  border: 1px solid;
-  color: var(--main-bg-color-blue);
-  margin-bottom: 15px;
+	height: 1px;
+	width: 100%;
+	border: 1px solid;
+	color: var(--main-bg-color-blue);
+	margin-bottom: 15px;
 }
 
 .comment-container {
-  height: 150px;
-  padding: 3px;
-  border: 1px solid;
-  border-color: var(--main-bg-color-blue);
-  border-radius: 4%;
-  margin-bottom: 10px;
-  h3 {
-    font-size: medium;
-    font-weight: bold;
-    line-height: 0%;
-  }
+	height: 150px;
+	padding: 3px;
+	border: 1px solid;
+	border-color: var(--main-bg-color-blue);
+	border-radius: 4%;
+	margin-bottom: 10px;
+	h3 {
+		font-size: medium;
+		font-weight: bold;
+		line-height: 0%;
+	}
 
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
 }
 
 .comment-area {
-  width: 98%;
-  margin: 8px;
-  border: 1px solid;
-  border-color: var(--main-bg-color-blue);
-  border-radius: 4%;
-  margin-bottom: 10px;
-  p {
-    font-size: small;
-    line-height: 8px;
-    text-align: left;
-  }
+	width: 98%;
+	margin: 8px;
+	border: 1px solid;
+	border-color: var(--main-bg-color-blue);
+	border-radius: 4%;
+	margin-bottom: 10px;
+	p {
+		font-size: small;
+		line-height: 8px;
+		text-align: left;
+	}
 }
 
 .blocks {
-  display: flex;
-  justify-content: top;
-  padding: 15px;
-  width: 25%;
+	display: flex;
+	justify-content: top;
+	padding: 15px;
+	width: 25%;
 }
-
 
 @media (min-width: 320px) and (max-width: 1024px) {
-  
-  .container4buttons {  
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 1px;
-    column-gap: 1px;
-  }
+	.container4buttons {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		margin: 1px;
+		column-gap: 1px;
+	}
 
-  .nav-buttons .footer-btn {
-    width: 110px;
-    margin: 2px;
-    justify-content: center !important; /* Override Bootstrap */
-  }
+	.nav-buttons .footer-btn {
+		width: 110px;
+		margin: 2px;
+		justify-content: center !important; /* Override Bootstrap */
+	}
 
-  .content {
-    display: flex;
-    flex-direction: column;
-  }
+	.content {
+		display: flex;
+		flex-direction: column;
+	}
 
-  .aside {
-    width: 100%;
-  }
+	.aside {
+		width: 100%;
+	}
 
-  .posts {
-    width: 100%;
-  }
+	.posts {
+		width: 100%;
+	}
 
-  .thumbnail {
-    width: 150px;
-    padding: 1px;
-  }
+	.thumbnail {
+		width: 150px;
+		padding: 1px;
+	}
 
-  .p-footer {
-    font-size: 6px;
-  }
-  
-  footer {
-    margin-top: 5px;
-  }
+	.p-footer {
+		font-size: 6px;
+	}
 
+	footer {
+		margin-top: 5px;
+	}
 }
 
-.test {
-  border: 2px solid pink;
-}
+/*.test {
+	border: 2px solid pink;
+}*/

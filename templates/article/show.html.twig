@@ -3,84 +3,117 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-    <h1>{{ article.title }}</h1>
-    <p>{{ article.user.username }}</p> added this article on {{ article.publishedAt|date('d/m/Y') }}</p>
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
 
-            <tr>
-                <th>Place</th>
-                <td>{{ article.place }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ article.city }}</td>
-            </tr>
-            <tr>
-                <th>Country</th>
-                <td>{{ article.country }}</td>
-            </tr>
-            <tr>
-                <th>Attraction</th>
-                <td>{{ article.attraction }}</td>
-            </tr>
-            <tr>
-                <th>Activity</th>
-                <td>{{ article.activity }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Text Area</th>
-                <td>{{ article.textArea }}</td>
-            </tr>
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_home') }}" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_index') }}" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_search') }}"  role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_new') }}" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_about') }}"  role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="{{ path('app_login') }}"  role="button">Login</a>
+        </div>
+      </div>
+    </header>
+    <main>
+        <link rel="stylesheets" href="{{ asset('styles/style-articlepage.css') }}">
+    	  <section  class="posts test">
+          <article class="post1">
+            <div class="titles-post1">
+              <h1>{{ article.title }}</h1>
+              <p><span class="title-descrptions">{{ article.user.username }}</span>added this article on {{ article.publishedAt|date('d/m/Y') }}</p>
+            </div>
+            <table class="table para-post1">
+              <tbody>
+                <tr>
+                  <th>Id</th>
+                  <td>{{ article.id }}</td>
+                </tr>
+                <tr>
+                    <th>Place</th>
+                    <td>{{ article.place }}</td>
+                </tr>
+                <tr>
+                    <th>City</th>
+                    <td>{{ article.city }}</td>
+                </tr>
+                <tr>
+                    <th>Country</th>
+                    <td>{{ article.country }}</td>
+                </tr>
+                <tr>
+                  <th>Attraction</th>
+                  <td>{{ article.attraction }}</td>
+                </tr>
+                <tr>
+                  <th>Activity</th>
+                  <td>{{ article.activity }}</td>
+                </tr>
+                <tr>
+                  <th>Title</th>
+                  <td>{{ article.title }}</td>
+                </tr>
+                <tr>
+                  <th>Text Area</th>
+                  <td>{{ article.textArea }}</td>
+                </tr>
+                <tr>
+                  <th>Photo</th>
+                  <td>{{ article.photo ? 'Yes' : 'No' }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="btn-container d-flex justify-content-between mt-2">
+              {% if user is same as(article.user) %}
+                <a href="{{ path('app_article_edit', {'slug': article.slug, 'id': article.id}) }}" class='btn submit-btn btn-primary text-white fw-bold'>Edit</a>
+                {{ include('article/_delete_form.html.twig') }}
+              {% endif %}
+            </div>
+              <a href="{{ path('app_article_index') }}" >back to list</a>
+              </br> 
+                <div class="line-space">
+                </div>
 
-            <tr>
-                <th>Photo</th>
-                <td>{{ article.photo ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <div>
+              <h3>Create a comment for "{{ article.title }}"</h3>
+                {{ form_start(form) }}
+                  {{ form_row(form.content, {'attr': {'style': 'width: 880px; height: 80px;'}}) }}
+                  <button class="btn submit-btn btn-primary text-white fw-bold">Submit</button>
+                {{ form_end(form) }}
 
-    <a href="{{ path('app_article_index') }}">back to list</a>
+            <h2>Comments</h2>
+            <ul style="list-style-type: none;">
+              <li>
+                <td>
+                    {% for comment in comments %}
+                      <p><strong>{{ comment.user.username }}</strong>added this comment on {#{{ comment.publishedAt|date('d/m/Y') }} #}</p>
+                      {{ comment.content }}
 
+                        {% if user is same as(comment.user) %}                
+                          <a href="{{ path('app_article_edit_comment', {'id': comment.id}) }}">Edit</a>
+                          {{ include('article/_delete_comment.html.twig') }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+              </li>
+            </ul>
 
-    {% if user is same as(article.user) %}
-    <a href="{{ path('app_article_edit', {'slug': article.slug, 'id': article.id}) }}">Edit</a>
-    {{ include('article/_delete_form.html.twig') }}
-    {% endif %}
-
-
-    <h3>Create a comment for "{{ article.title }}"</h3>
-    {{ form_start(form) }}
-        {{ form_row(form.content) }}
-        <button class="btn">Submit</button>
-        
-    {{ form_end(form) }}
-
-    <h2>Comments</h2>
-    <ul style="list-style-type: none;">
-        <li>
-            <td>
-            {% for comment in comments %}
-                <p><strong>{{ comment.user.username }}</strong>added this comment on {#{{ comment.publishedAt|date('d/m/Y') }} #}</p>
-                {{ comment.content }}
-
-                {% if user is same as(comment.user) %}                
-                <a href="{{ path('app_article_edit_comment', {'id': comment.id}) }}">Edit</a>
-                {{ include('article/_delete_comment.html.twig') }}
-                {% endif %}
-                </form>
-            {% endfor %}
-            </td>
-        </tbody>
-    </ul>
+        </section>
+    </main>
 
 {% endblock %}
     {#  {% if user is same as(comment.user) or is_granted('ROLE_ADMIN') %}

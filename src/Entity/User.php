@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
-    //#[Assert\NotBlank(message: "LastName cannot be blank.")]
+    #[Assert\NotBlank(message: "LastName cannot be blank.")]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
@@ -247,4 +247,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    
 }

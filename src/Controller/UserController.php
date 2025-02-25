@@ -10,6 +10,8 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\UserType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
@@ -33,6 +35,59 @@ class UserController extends AbstractController
         return new JsonResponse($data, JsonResponse::HTTP_OK);
     }
 
+    #[Route('/profile', name: 'app_user_profile')] 
+    public function showProfile(): Response
+    {       $user = $this->getUser();
+            if(!$user) {
+                $this->addFlash('error', 'Vous devez être');
+                return $this->redirectToRoute('app_login');
+            }
+    return $this->render('user/profile.html.twig');
+    }
+
+    #[Route('/edit/{id}', name: 'app_user_edit', requirements: ['id' => '\d+'])]
+    #[IsGranted('ROLE_USER', 'ROLE_ADMIN')] // Ensure only admin and logged-in users access this
+    public function editUser(User $user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+             // Make sure the logged-in user can only edit their own profile
+        if ($user !== $this->getUser()) {
+            throw $this->createAccessDeniedException('You can only edit your own profile.');
+        }
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($form);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'form' => $form,
+        ]);
+    } 
+
+    #[Route('/{id}', name: 'app_user_delete', requirements: ['id' => '\d+'])] 
+    public function delete(User $user, Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        //see if the user is registered (its own token) and may delete his account
+                /** @var User|null $user */
+            $user = $this->getUser();
+
+            if (!$user) {
+            return new JsonResponse(['error' => 'User not logged in.'], JsonResponse::HTTP_UNAUTHORIZED);
+            }
+            if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+    return new JsonResponse (['Message' => 'Account deleted successfully!']);
+
+    } 
+
+
     //show one specific user
     /*#[Route('/user/{id}', name: 'app_user{id}')] 
     public function show(User $user): JsonResponse {
@@ -46,30 +101,8 @@ class UserController extends AbstractController
             "username" => $user->getUsername(),
         ];
         return new JsonResponse($data, JsonResponse::HTTP_OK);
-    }
+    } */
 
-    #[Route('/user/create', name: 'app_user_create')] 
-    public function create(Request $request, EntityManagerInterface $entityManager): JsonResponse {
-        //fetch json data of request
-        $data = json_decode($request->getContent(), true );
-
-        //create new user
-        $user = new User();
-
-        $user->setEmail($data ["email"]);
-        $user->setRoles($data ["roles"] ?? ["ROLE_USER"]);
-        $user->setPassword($data ["password"]);
-        $user->setUsername($data ["username"]);
-        $user->setFirstName($data ["firstName"]);
-        $user->setLastName($data ["lastName"]);
-
-    
-        //record the new user in the DB
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        return new JsonResponse(["status" => "User created"], JsonResponse::HTTP_CREATED);
-    }*/
 
 
 }
