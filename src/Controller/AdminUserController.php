@@ -40,7 +40,7 @@ final class AdminUserController extends AbstractController
             'user' => $user,
             'form' => $form,
         ]);
-    }
+    }*/
     // show one user 
     #[Route('/{id}', name: 'app_admin_user_show', methods: ['GET'])]
     public function show(User $user): Response
@@ -77,5 +77,5 @@ final class AdminUserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
-    }*/
+    }
 }

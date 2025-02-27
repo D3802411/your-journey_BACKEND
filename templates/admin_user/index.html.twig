@@ -1,12 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Hello CookiesController!{% endblock %}
 
 {% block body %}
-    <h1>Page for admin purposes</h1> </br>
-    <h1>User index</h1>
 
-    <table class="table">
+
+    <header class="container test">
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="logo-box test">
+          <img src="{{ asset('styles/images/LOGO_GREEN.png') }}" width="120px" >
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_home') }}" role="button" >Home</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_index') }}" role="button" >What's new</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_search') }}"  role="button">Search</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_article_new') }}" role="button" >Tell us</a>
+        </div>
+        <div class="nav-buttons my-custom-button ">
+          <a class="btn text-white fw-bold" href="{{ path('app_about') }}"  role="button"> About</a>
+        </div>
+        <div class="login-btn submit-btn ">
+          <a class="btn text-white fw-bold" href="{{ path('app_login') }}"  role="button">Login</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+        <link rel="stylesheets" href="{{ asset('styles/style-footers.css') }}">
+    	<section class="main-section">
+            <div class="title-footers">
+                <h1>Page for admin purposes</h1> </br>
+                <h1>User index</h1>
+
+                    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -19,8 +51,8 @@
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
-            <tr>
+                            {% for user in users %}
+                                <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
@@ -31,14 +63,52 @@
                     <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                                </tr>
+                    {% else %}
+                                <tr>
+                                <td colspan="8">no records found</td>
+                                </tr>
+                    {% endfor %}
+                            </tbody>
+                        </table>
+
+        </section>
+    </main>
 
     {# <a href="{{ path('app_admin_user_new') }}">Create new</a> #}
+
+
+
+    <footer class=" test">
+     <div class="container test"> 
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="{{ path('app_user_profile') }}" role="button">Your space</a>
+        </div><div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="{{ path('app_contact') }}" role="button">Contact</a>
+        </div>
+        <div class="nav-buttons my-custom-button footer-btn ">
+          <a class="btn text-white fw-bold" href="{{ path('app_cookies') }}" role="button" >Cookies</a>
+        </div>
+        {#<div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="Privacy-policy.html" role="button">Confidentiality</a>
+        </div> #}
+        <div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="{{ path('app_legal_terms') }}" role="button" >Legal terms</a>
+        </div>
+      </div>
+     </div>
+      
+
+      <div class="d-flex justify-content-center">
+        <a href="https://www.facebook.com" class="icon-button" target="_blank"> <i class="fa-brands fa-facebook-f"></i> </a>
+        <a href="https://www.instagram.com" class="icon-button" target="_blank"> <i class="fa-brands fa-instagram"> </i> </a>
+        <a href="https://x.com/Accueil" class="icon-button" target="_blank"> <i class="fa-brands fa-twitter"> </i> </a>
+        <a href="https://www.flickr.com/" class="icon-button" target="_blank"> <i class="fa-brands fa-flickr"> </i> </a>
+      </div>
+      <div class="d-flex justify-content-center">
+        <p class="p-footer">Copyright&copy; 2024 Your Journey Org. All Rights Reserved</p>
+      </div>
+    </footer>
+
 {% endblock %}
