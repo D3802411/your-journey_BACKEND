@@ -45,7 +45,7 @@ class UserController extends AbstractController
     return $this->render('user/profile.html.twig');
     }
 
-    #[Route('/edit/{id}', name: 'app_user_edit', requirements: ['id' => '\d+'])]
+    /*#[Route('/edit/{id}', name: 'app_user_edit', requirements: ['id' => '\d+'])]
     #[IsGranted('ROLE_USER', 'ROLE_ADMIN')] // Ensure only admin and logged-in users access this
     public function editUser(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -67,7 +67,7 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', [
             'form' => $form,
         ]);
-    } 
+    } */
 
     #[Route('/{id}', name: 'app_user_delete', requirements: ['id' => '\d+'])] 
     public function delete(User $user, Request $request, EntityManagerInterface $entityManager): JsonResponse

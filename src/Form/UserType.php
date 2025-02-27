@@ -48,13 +48,6 @@ class UserType extends AbstractType
                             ),
                     ],
             ])
-                //I MAY REMOVE PW FIELD
-            //->add('password', PasswordType::class, [
-            //   'label' => 'New Password',
-            //    'mapped' => false, 
-            //    'required' => false, // Allow the admin to leave it empty
-            //   'attr' => ['autocomplete' => 'new-password'],  //instructs the browser not to autofill with existing saved pw. Suggests creating or entering a new password.
-            //])
             ->add('firstName', TextType::class, [
                     'constraints' => [
                     new NotBlank([
@@ -66,7 +59,7 @@ class UserType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
+            ]) 
             ->add('lastName', TextType::class, [
                 'constraints' => [
                     new NotBlank([

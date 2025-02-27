@@ -49,4 +49,36 @@
     </main>
 
 
+    <footer class=" test">
+     <div class="container test"> 
+      <div class="d-flex .flex-row align-items-center justify-content-between container4buttons test">
+        <div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="{{ path('app_user_profile') }}" role="button">Your space</a>
+        </div><div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="{{ path('app_contact') }}" role="button">Contact</a>
+        </div>
+        <div class="nav-buttons my-custom-button footer-btn ">
+          <a class="btn text-white fw-bold" href="{{ path('app_cookies') }}" role="button" >Cookies</a>
+        </div>
+        {#<div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="Privacy-policy.html" role="button">Confidentiality</a>
+        </div> #}
+        <div class="nav-buttons my-custom-button footer-btn">
+          <a class="btn text-white fw-bold" href="{{ path('app_legal_terms') }}" role="button" >Legal terms</a>
+        </div>
+      </div>
+     </div>
+      
+
+      <div class="d-flex justify-content-center">
+        <a href="https://www.facebook.com" class="icon-button" target="_blank"> <i class="fa-brands fa-facebook-f"></i> </a>
+        <a href="https://www.instagram.com" class="icon-button" target="_blank"> <i class="fa-brands fa-instagram"> </i> </a>
+        <a href="https://x.com/Accueil" class="icon-button" target="_blank"> <i class="fa-brands fa-twitter"> </i> </a>
+        <a href="https://www.flickr.com/" class="icon-button" target="_blank"> <i class="fa-brands fa-flickr"> </i> </a>
+      </div>
+      <div class="d-flex justify-content-center">
+        <p class="p-footer">Copyright&copy; 2024 Your Journey Org. All Rights Reserved</p>
+      </div>
+    </footer>
+
 {% endblock %}
