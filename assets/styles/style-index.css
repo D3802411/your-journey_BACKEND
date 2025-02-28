@@ -120,6 +120,7 @@ p {
 
 	.nav-buttons {
 		width: 120px;
+		height: 30px;
 		font-size: small;
 		text-align: center;
 	}
@@ -138,13 +139,15 @@ p {
 			width: 200px;
 			height: auto;
 		}
-		h3,
-		h5 {
+		h3 {
 			font-size: 15px;
 			text-justify: distribute;
 		}
 	}
-
+	p {
+		font-size: 15px;
+		text-align: justify;
+	}
 	.p-footer {
 		font-size: 6px;
 	}
